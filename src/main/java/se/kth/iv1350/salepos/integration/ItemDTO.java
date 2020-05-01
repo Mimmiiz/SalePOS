@@ -6,10 +6,10 @@ import se.kth.iv1350.salepos.model.ItemID;
  * This class is an item DTO that transfers item information from the integration layer to the model.
  */
 public final class ItemDTO {
-    String name;
-    int price;
-    int vatRate;
-    ItemID itemID;
+    private String name;
+    private int price;
+    private int vatRate;
+    private ItemID itemID;
     
     /**
      * Creates a new instance.
