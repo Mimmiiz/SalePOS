@@ -11,9 +11,9 @@ import se.kth.iv1350.salepos.integration.Printer;
 public class Sale {
     private LocalTime saleTime;
     private ItemList itemList;
-    private int totalPriceWithoutVat;
-    private double totalPriceWithVat;
-    private double saleVatRate;
+    private Amount totalPriceWithoutVat;
+    private Amount totalPriceWithVat;
+    private Amount saleVatRate;
     
     /**
      * Creates a new instance and sets the current local time of the sale.
@@ -57,7 +57,7 @@ public class Sale {
      * @return A CurrentSaleDTO that contains current sale information.
      */
     public CurrentSaleDTO getSaleInfo() {
-        CurrentSaleDTO saleInfo = new CurrentSaleDTO(totalPriceWithVat);
+        CurrentSaleDTO saleInfo = new CurrentSaleDTO(totalPriceWithVat.getAmount());
         
         return saleInfo;
     }
@@ -69,7 +69,7 @@ public class Sale {
      * @return The amount of change.
      */
     public Amount pay(CashPayment payment) {
-        Amount totalPrice = new Amount(totalPriceWithVat);
+        Amount totalPrice = new Amount(totalPriceWithVat.getAmount());
         payment.setTotalPrice(totalPrice);
         Amount change = calculateChange(payment);
         
@@ -104,7 +104,7 @@ public class Sale {
      * @return The amount of change.
      */
     private Amount calculateChange(CashPayment payment) {
-        Amount totalPrice = new Amount(totalPriceWithVat);
+        Amount totalPrice = new Amount(totalPriceWithVat.getAmount());
         Amount change = payment.getPaidAmount().subtract(totalPrice);
         
         return change;
@@ -119,7 +119,7 @@ public class Sale {
      */
     private CurrentSaleDTO createCurrentSaleDTO(ItemID itemID) {
         Item latestItemAddedToList = itemList.getSpecifiedItemFromList(itemID);
-        CurrentSaleDTO saleInfo = new CurrentSaleDTO(latestItemAddedToList, totalPriceWithVat);
+        CurrentSaleDTO saleInfo = new CurrentSaleDTO(latestItemAddedToList, totalPriceWithVat.getAmount());
         
         return saleInfo;
     }
@@ -141,6 +141,8 @@ public class Sale {
      * @return The VAT rate for the whole sale.
      */
     private void calculateSaleVat() {
-         saleVatRate = (totalPriceWithVat/totalPriceWithoutVat - 1)* 100.0;
+         Amount multiplier = new Amount(100);
+         Amount adder = new Amount(1);
+         saleVatRate =((totalPriceWithVat.divideBy(totalPriceWithoutVat)).subtract(adder)).multiply(multiplier);
     }
 }
