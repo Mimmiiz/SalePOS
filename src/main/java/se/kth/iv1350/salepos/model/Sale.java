@@ -57,7 +57,7 @@ public class Sale {
      * @return A CurrentSaleDTO that contains current sale information.
      */
     public CurrentSaleDTO getSaleInfo() {
-        CurrentSaleDTO saleInfo = new CurrentSaleDTO(totalPriceWithVat.getAmount());
+        CurrentSaleDTO saleInfo = new CurrentSaleDTO(totalPriceWithVat);
         
         return saleInfo;
     }
@@ -119,7 +119,7 @@ public class Sale {
      */
     private CurrentSaleDTO createCurrentSaleDTO(ItemID itemID) {
         Item latestItemAddedToList = itemList.getSpecifiedItemFromList(itemID);
-        CurrentSaleDTO saleInfo = new CurrentSaleDTO(latestItemAddedToList, totalPriceWithVat.getAmount());
+        CurrentSaleDTO saleInfo = new CurrentSaleDTO(latestItemAddedToList, totalPriceWithVat);
         
         return saleInfo;
     }
