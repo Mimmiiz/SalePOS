@@ -4,11 +4,11 @@ package se.kth.iv1350.salepos.model;
  * This class is a DTO of the sale. It contains current sale information.
  */
 public final class CurrentSaleDTO {
-    private double totalPriceWithVat;
+    private Amount totalPriceWithVat;
     private String itemName;
-    private int itemPrice;
-    private int itemVatRate;
-    private int itemQuantity;
+    private Amount itemPrice;
+    private Amount itemVatRate;
+    private Amount itemQuantity;
 
    /**
     * Creates a new instance.
@@ -16,7 +16,7 @@ public final class CurrentSaleDTO {
     * @param item The latest item that was added to the sale.
     * @param totalPriceWithVat The total price with VAT.
     */
-    public CurrentSaleDTO(Item item, double totalPriceWithVat) {
+    public CurrentSaleDTO(Item item, Amount totalPriceWithVat) {
        this.totalPriceWithVat = totalPriceWithVat;
        itemName = item.getName();
        itemPrice = item.getPrice();
@@ -30,8 +30,8 @@ public final class CurrentSaleDTO {
      * 
      * @param totalPriceWithVat The total price with VAT.
      */
-    public CurrentSaleDTO(double totalPriceWithVat) {
-        this.totalPriceWithVat = totalPriceWithVat;
+    public CurrentSaleDTO(Amount totalPriceWithVat) {
+        this.totalPriceWithVat = new Amount(totalPriceWithVat);
     }
 
     /**
@@ -39,8 +39,8 @@ public final class CurrentSaleDTO {
      * 
      * @return The value of totalPriceWithVat.
      */
-    public double getTotalPriceWithVat() {
-        return totalPriceWithVat;
+    public Amount getTotalPriceWithVat() {
+        return new Amount(totalPriceWithVat);
     }
 
     /**
@@ -57,8 +57,8 @@ public final class CurrentSaleDTO {
      * 
      * @return The value of itemPrice.
      */
-    public int getItemPrice() {
-        return itemPrice;
+    public Amount getItemPrice() {
+        return new Amount(itemPrice);
     }
 
     /**
@@ -66,8 +66,8 @@ public final class CurrentSaleDTO {
      * 
      * @return The value of itemQuantity.
      */
-    public int getItemQuantity() {
-        return itemQuantity;
+    public Amount getItemQuantity() {
+        return new Amount(itemQuantity);
     }
 
     /**
@@ -75,7 +75,7 @@ public final class CurrentSaleDTO {
      * 
      * @return The value of itemVatRate.
      */
-    public int getItemVatRate() {
-        return itemVatRate;
+    public Amount getItemVatRate() {
+        return new Amount(itemVatRate);
     } 
 }
