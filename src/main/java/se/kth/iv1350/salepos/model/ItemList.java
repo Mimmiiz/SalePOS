@@ -57,14 +57,14 @@ public class ItemList {
     * 
     * @return The total price including VAT of all items.
     */
-   double getTotalPriceWithVat () {
+   Amount getTotalPriceWithVat () {
        int counter = 0;
-       Amount totalPriceWithVat;
+       Amount totalPriceWithVat = new Amount();
        
        while (list.size() > counter && list.get(counter) != null) {
-           Amount itemPrice = list.get(counter).getPrice()*list.get(counter).getQuantity();
-           double itemVat = list.get(counter).getVatRate()/100.0 + 1.0;
-           totalPriceWithVat = totalPriceWithVat + (itemPrice * itemVat);
+           Amount itemPrice = list.get(counter).getPrice().multiply(list.get(counter).getQuantity());
+           Amount itemVat = list.get(counter).getVatRate().divideBy(new Amount(100.0)).add(new Amount(1.0));
+           totalPriceWithVat = (itemPrice.multiply(itemVat).add(totalPriceWithVat));
  
            counter++;
        }
