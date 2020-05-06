@@ -71,9 +71,9 @@ public class View {
     private void printOutSaleInformation(CurrentSaleDTO saleInfo) {
         System.out.println("Output: ");
         System.out.println("Item name: " + saleInfo.getItemName());
-        System.out.println("Item price: " + saleInfo.getItemPrice());
-        System.out.println("Item VAT rate: " + saleInfo.getItemVatRate());
-        System.out.println("Item quantity: " + saleInfo.getItemQuantity());
-        System.out.println("Running total including VAT: " + saleInfo.getTotalPriceWithVat());
+        System.out.println("Item price: " + saleInfo.getItemPrice().getAmount());
+        System.out.println("Item VAT rate: " + saleInfo.getItemVatRate().getAmount());
+        System.out.println("Item quantity: " + saleInfo.getItemQuantity().getAmount());
+        System.out.println("Running total including VAT: " + saleInfo.getTotalPriceWithVat().getAmount());
     }
 }
