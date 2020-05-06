@@ -15,6 +15,15 @@ public class Amount {
         this.amount = amount;
     }
     
+    /**
+     * Creates a new instance of an already existing <code>Amount</code>.
+     * 
+     * @param newAmount The <code>Amount</code> to create a copy of.
+     */
+    public Amount(Amount newAmount){
+        this.amount = newAmount.amount;
+    }
+    
       /**
      * Creates a new instance. Represents an amount that is 0.
      */
