@@ -64,7 +64,7 @@ public class ControllerTest {
         ItemID itemID = new ItemID(identifierNumber);
         CurrentSaleDTO saleInfoInstance = instanceToTest.searchForItem(itemID);
         double expectedResult = 8.96;
-        double result = saleInfoInstance.getTotalPriceWithVat();
+        double result = saleInfoInstance.getTotalPriceWithVat().getAmount();
         double marginOfError = 0.01;
         assertEquals(expectedResult, result, marginOfError, "The expected running total (incl. VAT) was not retrieved.)");
     }
@@ -79,7 +79,7 @@ public class ControllerTest {
     public void testEndSaleCorrectTotalPriceReturned() {
         CurrentSaleDTO saleInfoInstance = instanceToTest.endSale();
         double expectedResult = 0.0;
-        double result = saleInfoInstance.getTotalPriceWithVat();
+        double result = saleInfoInstance.getTotalPriceWithVat().getAmount();
         assertEquals(expectedResult, result, "The correct total price was not retreived.");
     }
     
