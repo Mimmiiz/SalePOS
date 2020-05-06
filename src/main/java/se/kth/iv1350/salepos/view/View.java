@@ -44,7 +44,7 @@ public class View {
         saleInfo = contr.endSale();
         System.out.println("The sale has ended.");
         System.out.println("Output: ");
-        System.out.println("Total price including VAT: " + saleInfo.getTotalPriceWithVat());
+        System.out.println("Total price including VAT: " + saleInfo.getTotalPriceWithVat().getAmount());
         
         Amount paidAmount = new Amount(40);
         Amount change = contr.pay(paidAmount);
