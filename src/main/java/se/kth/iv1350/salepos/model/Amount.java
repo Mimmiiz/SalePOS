@@ -71,7 +71,7 @@ public class Amount {
      * @param otherAmount The <code>Amount</code> to divide with.
      * @return The result of the division.
      */
-    public Amount divideWith(Amount otherAmount) {
+    public Amount divideBy(Amount otherAmount) {
         return new Amount(amount / otherAmount.amount);
     }
     
