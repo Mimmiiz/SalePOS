@@ -9,8 +9,8 @@ public class Item {
     private ItemID itemID;
     private String name;
     private Amount price;
-    private int vatRate;
-    private int quantity;
+    private Amount vatRate;
+    private Amount quantity;
 
     /**
      * Creates a new instance of an Item using an ItemDTO.
@@ -21,8 +21,8 @@ public class Item {
         name = itemDTO.getName();
         itemID = new ItemID(itemDTO.getItemID().getIdentifierNumber());
         price = new Amount(itemDTO.getPrice());
-        vatRate = itemDTO.getVatRate();
-        quantity = 1;
+        vatRate = new Amount(itemDTO.getVatRate());
+        quantity = new Amount(1);
     }
     
     /**
@@ -31,7 +31,7 @@ public class Item {
      * @return The itemID of the specified Item.
      */
     ItemID getItemID() {
-        return itemID;
+        return new ItemID(this.itemID);
     }
     
     /**
@@ -39,8 +39,8 @@ public class Item {
      * 
      * @return The value of vatRate.
      */
-    int getVatRate() {
-        return vatRate;
+    Amount getVatRate() {
+        return new Amount(this.vatRate);
     }
     
     /**
@@ -49,7 +49,7 @@ public class Item {
      * @return The value of price.
      */
     Amount getPrice() {
-        return new Amount(this.price.getAmount());
+        return new Amount(this.price);
     }
     
     /**
@@ -66,8 +66,8 @@ public class Item {
      * 
      * @return The value of quantity.
      */
-    int getQuantity() {
-        return quantity;
+    Amount getQuantity() {
+        return new Amount(this.quantity);
     }
     
     /**
@@ -75,7 +75,7 @@ public class Item {
      * 
      * @param quantity The new quantity of the item. 
      */
-    void setQuantity(int quantity) {
-        this.quantity = quantity; 
+    void setQuantity(Amount quantity) {
+        this.quantity = new Amount(this.quantity); 
     }
 }
