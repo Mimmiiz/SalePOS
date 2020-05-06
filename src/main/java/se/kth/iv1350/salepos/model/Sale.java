@@ -11,9 +11,9 @@ import se.kth.iv1350.salepos.integration.Printer;
 public class Sale {
     private LocalTime saleTime;
     private ItemList itemList;
-    private Amount totalPriceWithoutVat;
-    private Amount totalPriceWithVat;
-    private Amount saleVatRate;
+    private Amount totalPriceWithoutVat = new Amount();
+    private Amount totalPriceWithVat = new Amount();
+    private Amount saleVatRate = new Amount();
     
     /**
      * Creates a new instance and sets the current local time of the sale.
