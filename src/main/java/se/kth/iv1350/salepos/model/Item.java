@@ -8,7 +8,7 @@ import se.kth.iv1350.salepos.integration.ItemDTO;
 public class Item {
     private ItemID itemID;
     private String name;
-    private int price;
+    private Amount price;
     private int vatRate;
     private int quantity;
 
@@ -20,7 +20,7 @@ public class Item {
     Item(ItemDTO itemDTO) {
         name = itemDTO.getName();
         itemID = new ItemID(itemDTO.getItemID().getIdentifierNumber());
-        price = itemDTO.getPrice();
+        price = new Amount(itemDTO.getPrice());
         vatRate = itemDTO.getVatRate();
         quantity = 1;
     }
@@ -48,8 +48,8 @@ public class Item {
      * 
      * @return The value of price.
      */
-    int getPrice() {
-        return price;
+    Amount getPrice() {
+        return new Amount(this.price.getAmount());
     }
     
     /**
