@@ -54,6 +54,28 @@ public class Amount {
     }
     
     /**
+     * Multiplies the specified </code>Amount</code> from this object and returns an <code>Amount</code>
+     * instance with the result.
+     * 
+     * @param otherAmount The <code>Amount</code> to multiply with.
+     * @return The result of the multiplication.
+     */
+    public Amount multiply(Amount otherAmount) {
+        return new Amount(amount * otherAmount.amount);
+    }
+    
+    /**
+     * Divides the specified <code>Amount</code> from this object and returns an <code>Amount</code>
+     * instance with the result.
+     * 
+     * @param otherAmount The <code>Amount</code> to divide with.
+     * @return The result of the division.
+     */
+    public Amount divideWith(Amount otherAmount) {
+        return new Amount(amount / otherAmount.amount);
+    }
+    
+    /**
      * Get the value of amount.
      * 
      * @return The value of amount.
