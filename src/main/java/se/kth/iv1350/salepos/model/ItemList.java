@@ -32,11 +32,11 @@ public class ItemList {
     * @param itemID The ItemID of the item that shall be incremented by one.
     */
    void incrementItemQuantity (ItemID itemID) {
-       int newItemQuantity;
+       Amount newItemQuantity = new Amount();
        
        for (Item item : list) {
            if (itemID.checkItemIDMatch(itemID, item.getItemID())) {
-               newItemQuantity = item.getQuantity() + 1;
+               newItemQuantity = item.getQuantity().add(new Amount(1));
                item.setQuantity(newItemQuantity);
            } 
        }
