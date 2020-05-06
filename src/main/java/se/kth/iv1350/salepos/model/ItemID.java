@@ -14,6 +14,15 @@ public class ItemID {
     public ItemID(int identifierNumber) {
         this.identifierNumber = identifierNumber;
     }
+    
+    /**
+     * Creates a new instance of an already existing <code>ItemID</code>.
+     * 
+     * @param itemID The <code>ItemID</code> to create a copy of.
+     */
+    public ItemID(ItemID itemID) {
+        this.identifierNumber = itemID.identifierNumber;
+    }
 
     /**
      * Get the value of identifierNumber.
