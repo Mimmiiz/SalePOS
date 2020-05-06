@@ -59,10 +59,10 @@ public class ItemListTest {
     @Test
     public void testIncrementItemQuantity() {
         ItemID itemIDInstance = new ItemID(89991);
-        int expectedQuantity = 2;
+        double expectedQuantity = 2.0;
         instanceToTest.incrementItemQuantity (itemIDInstance);
         Item itemFromList = instanceToTest.getSpecifiedItemFromList(itemIDInstance);
-        int resultQuantity = itemFromList.getQuantity();
+        double resultQuantity = itemFromList.getQuantity().getAmount();
         assertEquals(expectedQuantity, resultQuantity, "The expected result did not match the actual result.");
     }
          
@@ -79,15 +79,17 @@ public class ItemListTest {
       @Test
     public void testGetTotalPriceWithVat() {
         double expectedResult = 27.61;
-        double result = instanceToTest.getTotalPriceWithVat();
-          assertEquals(expectedResult, result, "The expected result did not match the actual result.");
+        double marginOfError = 0.01;
+        double result = instanceToTest.getTotalPriceWithVat().getAmount();
+          assertEquals(expectedResult, result, marginOfError, "The expected result did not match the actual result.");
     }
     
     @Test
     public void testGetTotalPrice() {
-        int expectedResult = 23;
-        int result = instanceToTest.getTotalPrice();
-        assertEquals(expectedResult, result, "The expected result did not match the actual result.");
+        double expectedResult = 23.0;
+        double marginOfError = 0.01;
+        double result = instanceToTest.getTotalPrice().getAmount();
+        assertEquals(expectedResult, result, marginOfError, "The expected result did not match the actual result.");
     }
     
     @Test
