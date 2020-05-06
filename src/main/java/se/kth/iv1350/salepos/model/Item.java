@@ -76,6 +76,6 @@ public class Item {
      * @param quantity The new quantity of the item. 
      */
     void setQuantity(Amount quantity) {
-        this.quantity = new Amount(this.quantity); 
+        this.quantity = new Amount(quantity); 
     }
 }
