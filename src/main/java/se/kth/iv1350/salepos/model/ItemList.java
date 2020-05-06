@@ -59,10 +59,10 @@ public class ItemList {
     */
    double getTotalPriceWithVat () {
        int counter = 0;
-       double  totalPriceWithVat = 0;
+       Amount totalPriceWithVat;
        
        while (list.size() > counter && list.get(counter) != null) {
-           int itemPrice = list.get(counter).getPrice()*list.get(counter).getQuantity();
+           Amount itemPrice = list.get(counter).getPrice()*list.get(counter).getQuantity();
            double itemVat = list.get(counter).getVatRate()/100.0 + 1.0;
            totalPriceWithVat = totalPriceWithVat + (itemPrice * itemVat);
  
@@ -76,12 +76,12 @@ public class ItemList {
     * 
     * @return The total price of all items.
     */
-   int getTotalPrice () {
+   Amount getTotalPrice () {
        int counter = 0;
-       int totalPrice = 0;
+       Amount totalPrice = new Amount();
        
        while (list.size() > counter && list.get(counter) != null) {
-           totalPrice = totalPrice + list.get(counter).getPrice()*list.get(counter).getQuantity();
+           totalPrice = totalPrice.add(list.get(counter).getPrice().multiply(list.get(counter).getQuantity()));
            counter++;
        }
        return totalPrice;
