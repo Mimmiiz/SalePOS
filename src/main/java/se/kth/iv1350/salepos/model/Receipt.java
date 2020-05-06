@@ -17,7 +17,7 @@ public class Receipt {
     private String storeName = "Super Store";   
     private LocalTime saleTime;
     private ArrayList<Item> list;
-    private double totalPrice;
+    private Amount totalPrice;
     private double totalVat;
 
     /**
