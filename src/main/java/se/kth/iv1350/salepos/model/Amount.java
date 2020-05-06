@@ -1,7 +1,7 @@
 package se.kth.iv1350.salepos.model;
 
 /**
- * This class represents an amount. In this application an amount of money.
+ * This class represents an amount and contains methods for calculating with amounts.
  */
 public class Amount {
     private double amount;
