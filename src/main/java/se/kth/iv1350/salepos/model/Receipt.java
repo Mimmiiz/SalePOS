@@ -18,7 +18,7 @@ public class Receipt {
     private LocalTime saleTime;
     private ArrayList<Item> list;
     private Amount totalPrice;
-    private double totalVat;
+    private Amount totalVat;
 
     /**
      * Creates a new instance.
@@ -28,7 +28,7 @@ public class Receipt {
      * @param totalPrice The total price of the salem, including VAT.
      * @param totalVat The total VAT of the sale.
      */
-    public Receipt(LocalTime saleTime, ArrayList<Item> list, Amount totalPrice, double totalVat) {
+    public Receipt(LocalTime saleTime, ArrayList<Item> list, Amount totalPrice, Amount totalVat) {
         this.saleTime = saleTime;
         this.list = list;
         this.totalPrice = totalPrice;
