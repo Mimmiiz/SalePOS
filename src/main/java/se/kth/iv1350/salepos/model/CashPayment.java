@@ -40,6 +40,6 @@ public class CashPayment {
      * @param totalPrice the total price of the sale. 
      */
     public void setTotalPrice(Amount totalPrice) {
-        this.totalPrice = totalPrice;
+        this.totalPrice = new Amount(totalPrice.getAmount());
     }
 }
