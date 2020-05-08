@@ -44,7 +44,7 @@ public class ControllerTest {
     public void testSearchForItemCorrectTypeReturned() {
         int identifierNumber = 89991;
         ItemID itemID = new ItemID(identifierNumber);
-        CurrentSaleDTO saleInfoInstance = instanceToTest.searchForItem(itemID);
+        CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID);
         assertTrue(saleInfoInstance instanceof CurrentSaleDTO, "Sale information was not retreived correctly.");
     }
     
@@ -52,7 +52,7 @@ public class ControllerTest {
     public void testSearchForItemCorrectItemInfoReturned() {
         int identifierNumber = 89990;
         ItemID itemID = new ItemID(identifierNumber);
-        CurrentSaleDTO saleInfoInstance = instanceToTest.searchForItem(itemID);
+        CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID);
         String expectedResult = "Banana";
         String result = saleInfoInstance.getItemName();
         assertEquals(expectedResult, result, "The expected item info was not retrieved.");
@@ -62,7 +62,7 @@ public class ControllerTest {
     public void testSearchForItemCorrectRunningTotalReturned() {
         int identifierNumber = 60606;
         ItemID itemID = new ItemID(identifierNumber);
-        CurrentSaleDTO saleInfoInstance = instanceToTest.searchForItem(itemID);
+        CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID);
         double expectedResult = 8.96;
         double result = saleInfoInstance.getTotalPriceWithVat().getAmount();
         double marginOfError = 0.01;
@@ -95,7 +95,7 @@ public class ControllerTest {
         int identifierNumber = 89991;
         double paidAmountValue = 20.0;
         ItemID itemID = new ItemID(identifierNumber);
-        instanceToTest.searchForItem(itemID);
+        instanceToTest.registerItem(itemID);
         instanceToTest.endSale();
         Amount paidAmountInstance = new Amount(paidAmountValue);
         Amount expectedResult = new Amount(14.7);
