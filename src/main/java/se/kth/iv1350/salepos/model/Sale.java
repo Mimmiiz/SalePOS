@@ -32,7 +32,7 @@ public class Sale {
      * @param itemRegistry The item registry that has item information.
      * @return A CurrentSaleDTO that contains current sale information.
      */
-    public CurrentSaleDTO searchForItem(ItemID itemID, ItemRegistry itemRegistry) {
+    public CurrentSaleDTO registerItem(ItemID itemID, ItemRegistry itemRegistry) {
         boolean existingItemID = itemList.searchExistingItemID(itemID);
         ItemDTO searchedItem;
         
