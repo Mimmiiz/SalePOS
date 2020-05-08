@@ -57,8 +57,8 @@ public class Controller {
      * @param itemID The item ID of a specific item.
      * @return Current sale information.
      */
-    public CurrentSaleDTO searchForItem(ItemID itemID) {
-        CurrentSaleDTO saleInfo = sale.searchForItem(itemID, itemRegistry);
+    public CurrentSaleDTO registerItem(ItemID itemID) {
+        CurrentSaleDTO saleInfo = sale.registerItem(itemID, itemRegistry);
         
         return  saleInfo; 
     }
