@@ -36,7 +36,7 @@ public class SaleTest {
 
     @Test
     public void testSearchForItemReturnValue() {
-        CurrentSaleDTO saleInfoInstance = instanceToTest.searchForItem(itemID, itemReg);
+        CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID, itemReg);
         assertTrue(saleInfoInstance instanceof CurrentSaleDTO, "System did not return the correct value.");
     }
     
