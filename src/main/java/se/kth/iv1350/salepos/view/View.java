@@ -60,7 +60,7 @@ public class View {
     private CurrentSaleDTO addNewItemID (int identifierNumber) {
         ItemID itemID = new ItemID(identifierNumber);
         System.out.println("A new item identifier has been entered. Item ID: " + identifierNumber);
-        return contr.searchForItem(itemID);
+        return contr.registerItem(itemID);
     }
    
     /**
