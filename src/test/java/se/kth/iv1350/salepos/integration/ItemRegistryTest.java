@@ -33,7 +33,8 @@ public class ItemRegistryTest {
     public void testFindItemCorrectItemDTO() {
         ItemID itemIDinstance = new ItemID(60606);
         ItemDTO itemDTOinstance = instanceToTest.findItem(itemIDinstance);
-        int expectedPrice = 8;
-        assertEquals(expectedPrice, itemDTOinstance.getPrice(), "The price did not get the expected value.");  
+        double expectedPrice = 8;
+        double marginOfError = 0.01;
+        assertEquals(expectedPrice, itemDTOinstance.getPrice().getAmount(), marginOfError, "The price did not get the expected value.");  
     }  
 }
