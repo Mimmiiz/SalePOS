@@ -1,5 +1,6 @@
 package se.kth.iv1350.salepos.integration;
 
+import se.kth.iv1350.salepos.model.Amount;
 import se.kth.iv1350.salepos.model.ItemID;
 
 /**
@@ -7,8 +8,8 @@ import se.kth.iv1350.salepos.model.ItemID;
  */
 public final class ItemDTO {
     private final String name;
-    private final int price;
-    private final int vatRate;
+    private final Amount price;
+    private final Amount vatRate;
     private final ItemID itemID;
     
     /**
@@ -19,10 +20,10 @@ public final class ItemDTO {
      * @param vatRate The specified item vatRate.
      * @param itemID The specified ItemID.
      */
-    public ItemDTO(String name, int price, int vatRate, ItemID itemID) {
+    public ItemDTO(String name, Amount price, Amount vatRate, ItemID itemID) {
         this.name = name;
-        this.price = price;
-        this.vatRate = vatRate;
+        this.price = new Amount(price);
+        this.vatRate = new Amount(vatRate);
         this.itemID = itemID;
     }
 
@@ -40,8 +41,8 @@ public final class ItemDTO {
      * 
      * @return The value of price.
      */
-    public int getPrice() {
-        return price;
+    public Amount getPrice() {
+        return new Amount(price);
     }
 
     /**
@@ -49,8 +50,8 @@ public final class ItemDTO {
      * 
      * @return The value of vatRate.
      */
-    public int getVatRate() {
-        return vatRate;
+    public Amount getVatRate() {
+        return new Amount(vatRate);
     }
     
     /**
@@ -59,6 +60,6 @@ public final class ItemDTO {
      * @return The value of itemID.
      */
     public ItemID getItemID() {
-        return itemID;
+        return new ItemID(itemID);
     }
 }
