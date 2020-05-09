@@ -1,6 +1,7 @@
 package se.kth.iv1350.salepos.integration;
 
 import java.util.ArrayList;
+import se.kth.iv1350.salepos.model.Amount;
 import se.kth.iv1350.salepos.model.ItemID;
 
 /**
@@ -39,9 +40,9 @@ public class ItemRegistry {
      * easier testing.
      */
     private void addItems() {
-        itemDTOs.add(new ItemDTO("Apple", 5, 6, new ItemID(89991)));
-        itemDTOs.add(new ItemDTO("Banana", 3, 12, new ItemID(89990)));
-        itemDTOs.add(new ItemDTO("Bread", 15, 25, new ItemID(10001)));
-        itemDTOs.add(new ItemDTO("Milk", 8, 12, new ItemID(60606)));          
+        itemDTOs.add(new ItemDTO("Apple", new Amount(5), new Amount(6), new ItemID(89991)));
+        itemDTOs.add(new ItemDTO("Banana", new Amount(3), new Amount(12), new ItemID(89990)));
+        itemDTOs.add(new ItemDTO("Bread", new Amount(15), new Amount(25), new ItemID(10001)));
+        itemDTOs.add(new ItemDTO("Milk", new Amount(8), new Amount(12), new ItemID(60606)));          
     }
 }
