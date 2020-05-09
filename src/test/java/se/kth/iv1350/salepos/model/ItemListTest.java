@@ -22,9 +22,9 @@ public class ItemListTest {
         regCreator = new RegistryCreator(); 
         itemRegistry = regCreator.getItemRegistry();
         
-        instanceToTest.saveItemToList(new ItemDTO("Apple", 5, 10, new ItemID(89991)));
-        instanceToTest.saveItemToList(new ItemDTO("Banana", 3, 12, new ItemID(89990)));
-        instanceToTest.saveItemToList(new ItemDTO("Bread", 15, 25, new ItemID(10001)));
+        instanceToTest.saveItemToList(new ItemDTO("Apple", new Amount(5), new Amount(10), new ItemID(89991)));
+        instanceToTest.saveItemToList(new ItemDTO("Banana", new Amount(3), new Amount(12), new ItemID(89990)));
+        instanceToTest.saveItemToList(new ItemDTO("Bread", new Amount(15), new Amount(25), new ItemID(10001)));
     }
     
     @AfterEach
@@ -69,7 +69,7 @@ public class ItemListTest {
     @Test
     public void testSaveItemToList() {
         ItemID itemIDInstance = new ItemID(40032);
-        ItemDTO  itemDTOInstance = new ItemDTO("Juice", 12, 6, new ItemID(40032));
+        ItemDTO  itemDTOInstance = new ItemDTO("Juice", new Amount(12), new Amount(6), new ItemID(40032));
         instanceToTest.saveItemToList(itemDTOInstance);
         boolean expectedResult = true;
         boolean result = instanceToTest.searchExistingItemID(itemIDInstance);
