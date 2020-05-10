@@ -26,6 +26,19 @@ public class Item {
     }
     
     /**
+     * Creates a new instance of an Item that already exists, a copy of an Item.
+     * 
+     * @param item The Item that is copied.
+     */
+    Item(Item item) {
+        this.itemID = new ItemID(item.itemID);
+        this.name = item.name;
+        this.price = new Amount(item.price);
+        this.vatRate = new Amount(item.vatRate);
+        this.quantity = new Amount(item.quantity);
+    }
+    
+    /**
      * Get the value of itemID.
      * 
      * @return The itemID of the specified Item.
