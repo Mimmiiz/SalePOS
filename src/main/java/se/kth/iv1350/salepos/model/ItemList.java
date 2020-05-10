@@ -120,7 +120,14 @@ public class ItemList {
     * @return The value of list.
     */
    ArrayList<Item> getList() {
-        return list;
+       ArrayList<Item> listCopy = new ArrayList<>();
+       int counter = 0;
+       
+        while (list.size() > counter && list.get(counter) != null) {
+            listCopy.add(new Item(list.get(counter)));
+            counter++;
+        }
+        return listCopy;
     }
    
    /**
