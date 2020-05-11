@@ -1,5 +1,6 @@
 package se.kth.iv1350.salepos.model;
 
+import se.kth.iv1350.salepos.integration.InvalidItemIdentifierException;
 import java.time.LocalTime;
 import se.kth.iv1350.salepos.integration.ItemDTO;
 import se.kth.iv1350.salepos.integration.ItemRegistry;
@@ -32,7 +33,7 @@ public class Sale {
      * @param itemRegistry The item registry that has item information.
      * @return A CurrentSaleDTO that contains current sale information.
      */
-    public CurrentSaleDTO registerItem(ItemID itemID, ItemRegistry itemRegistry) {
+    public CurrentSaleDTO registerItem(ItemID itemID, ItemRegistry itemRegistry) throws InvalidItemIdentifierException {
         boolean existingItemID = itemList.searchExistingItemID(itemID);
         ItemDTO searchedItem;
         
