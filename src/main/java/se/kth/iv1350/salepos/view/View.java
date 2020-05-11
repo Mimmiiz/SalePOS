@@ -1,6 +1,7 @@
 package se.kth.iv1350.salepos.view;
 
 import se.kth.iv1350.salepos.controller.Controller;
+import se.kth.iv1350.salepos.controller.OperationFailedException;
 import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
 import se.kth.iv1350.salepos.model.Amount;
 import se.kth.iv1350.salepos.model.CurrentSaleDTO;
@@ -36,6 +37,7 @@ public class View {
         addNewItemID(89991);  
         addNewItemID(89990);
         addNewItemID(10001);
+        addNewItemID(88888);
         
         System.out.println("Adds an item identifier that does not exist.");
         addNewItemID(55555);
@@ -66,6 +68,8 @@ public class View {
         } catch (NoSuchItemIdentifierException exc) {
             handleException("The entered item identifier " + identifierNumber + " does not exist, "
                     + "please try again.", exc);
+        } catch (OperationFailedException exc) {
+            handleException("The item could not be registered to the sale. Check connection or try again.", exc);
         }
     }
    
