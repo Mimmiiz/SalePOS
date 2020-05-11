@@ -1,6 +1,7 @@
 package se.kth.iv1350.salepos.view;
 
 import se.kth.iv1350.salepos.controller.Controller;
+import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
 import se.kth.iv1350.salepos.model.Amount;
 import se.kth.iv1350.salepos.model.CurrentSaleDTO;
 import se.kth.iv1350.salepos.model.ItemID;
@@ -29,17 +30,14 @@ public class View {
         System.out.println("A new sale has been started.");
         
         CurrentSaleDTO saleInfo;
-        saleInfo = addNewItemID(89991);
-        printOutSaleInformation(saleInfo);
-   
-        saleInfo = addNewItemID(89991);
-        printOutSaleInformation(saleInfo);
-                
-        saleInfo = addNewItemID(89990);
-        printOutSaleInformation(saleInfo);
         
-        saleInfo = addNewItemID(10001);
-        printOutSaleInformation(saleInfo);
+        addNewItemID(89991);
+        addNewItemID(89991);  
+        addNewItemID(89990);
+        addNewItemID(10001);
+        
+        System.out.println("Adds an item identifier that does not exist.");
+        addNewItemID(55555);
         
         saleInfo = contr.endSale();
         System.out.println("The sale has ended.");
@@ -57,10 +55,16 @@ public class View {
      * 
      * @param identifierNumber The specified identifier number of the Item ID.
      */
-    private CurrentSaleDTO addNewItemID (int identifierNumber) {
-        ItemID itemID = new ItemID(identifierNumber);
-        System.out.println("A new item identifier has been entered. Item ID: " + identifierNumber);
-        return contr.registerItem(itemID);
+    private void addNewItemID (int identifierNumber) {
+        CurrentSaleDTO saleInfo;
+        try {
+            ItemID itemID = new ItemID(identifierNumber);
+            System.out.println("A new item identifier has been entered. Item ID: " + identifierNumber);
+            saleInfo = contr.registerItem(itemID);
+            printOutSaleInformation(saleInfo);
+        } catch (NoSuchItemIdentifierException exc) {
+            System.out.println("ItemID does not exist");
+        }
     }
    
     /**
