@@ -4,6 +4,7 @@ import se.kth.iv1350.salepos.integration.DiscountRegistry;
 import se.kth.iv1350.salepos.integration.ExternalAccount;
 import se.kth.iv1350.salepos.integration.ExternalCreator;
 import se.kth.iv1350.salepos.integration.ExternalInventory;
+import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
 import se.kth.iv1350.salepos.integration.ItemRegistry;
 import se.kth.iv1350.salepos.integration.Printer;
 import se.kth.iv1350.salepos.integration.RegistryCreator;
@@ -56,8 +57,9 @@ public class Controller {
      * 
      * @param itemID The item ID of a specific item.
      * @return Current sale information.
+     * @throws NoSuchItemIdentifierException if the specified ItemID does not exist.
      */
-    public CurrentSaleDTO registerItem(ItemID itemID) {
+    public CurrentSaleDTO registerItem(ItemID itemID) throws NoSuchItemIdentifierException {
         CurrentSaleDTO saleInfo = sale.registerItem(itemID, itemRegistry);
         
         return  saleInfo; 
