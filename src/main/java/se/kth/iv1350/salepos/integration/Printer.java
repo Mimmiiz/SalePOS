@@ -13,6 +13,6 @@ public class Printer {
      * @param receipt The receipt that shall be printed.
      */
     public void print(Receipt receipt) {
-    
+        System.out.println(receipt);
     }
 }
