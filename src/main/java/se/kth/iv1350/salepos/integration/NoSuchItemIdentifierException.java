@@ -18,4 +18,11 @@ public class NoSuchItemIdentifierException extends Exception {
         this.itemIDThatDoesNotExist = itemIDThatDoesNotExist;
     }
     
+    /**
+     * @return The item identifier that does not exist.
+     */
+    public ItemID getItemIDThatDoesNotExist() {
+        return itemIDThatDoesNotExist;
+    }
+    
 }
