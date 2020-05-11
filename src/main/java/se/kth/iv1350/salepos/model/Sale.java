@@ -39,7 +39,7 @@ public class Sale {
         if (existingItemID == true)
             itemList.incrementItemQuantity(itemID);
         else {
-            searchedItem = itemRegistry.findItem(itemID);
+            searchedItem = itemRegistry.searchForItem(itemID);
             itemList.saveItemToList(searchedItem);
         }
        
