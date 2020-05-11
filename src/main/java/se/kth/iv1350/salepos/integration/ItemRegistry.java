@@ -24,14 +24,14 @@ public class ItemRegistry {
      * @return An ItemDTO with all the item information.
      * @throws ItemRegistryException if an item with the specified ItemID did not exist.
      */
-    public ItemDTO searchForItem(ItemID itemID) throws InvalidItemIdentifierException {
+    public ItemDTO searchForItem(ItemID itemID) throws NoSuchItemIdentifierException {
         for (ItemDTO itemDTO : itemDTOs) {
             if (itemID.checkItemIDMatch(itemDTO.getItemID(), itemID)) {
                 return new ItemDTO(itemDTO.getName(), itemDTO.getPrice(), itemDTO.getVatRate(), 
                         itemDTO.getItemID());  
             }
         }
-        throw new InvalidItemIdentifierException (itemID);
+        throw new NoSuchItemIdentifierException (itemID);
     }   
     
     /**
