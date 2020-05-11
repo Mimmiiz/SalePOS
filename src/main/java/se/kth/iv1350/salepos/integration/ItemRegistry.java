@@ -23,7 +23,7 @@ public class ItemRegistry {
      * @param itemID the specified ItemID.
      * @return An ItemDTO with all the item information.
      */
-    public ItemDTO findItem(ItemID itemID) {
+    public ItemDTO searchForItem(ItemID itemID) {
         ItemDTO searchedItem = null;
         int counter = 0;
         
