@@ -23,6 +23,11 @@ public class ItemID {
     public ItemID(ItemID itemID) {
         this.identifierNumber = itemID.identifierNumber;
     }
+    
+    @Override
+    public String toString() {
+        return "" + identifierNumber;
+    }
 
     /**
      * Get the value of identifierNumber.
