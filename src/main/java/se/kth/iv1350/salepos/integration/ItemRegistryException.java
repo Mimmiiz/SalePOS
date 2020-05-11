@@ -1,9 +1,10 @@
 package se.kth.iv1350.salepos.integration;
 
 /**
- * This exception is thrown if something fails while performing operations in the <code>ItemRegistry</code>. 
+ * This exception is thrown if something goes wrong while performing operations in the 
+ * <code>ItemRegistry</code>. 
  */
-public class ItemRegistryException extends Exception {
+public class ItemRegistryException extends RuntimeException {
     
     /**
      * Creates a new instance representing the condition stated in the specified message.
