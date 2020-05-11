@@ -1,7 +1,7 @@
 package se.kth.iv1350.salepos.model;
 
+import java.time.LocalDateTime;
 import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
-import java.time.LocalTime;
 import se.kth.iv1350.salepos.integration.ItemDTO;
 import se.kth.iv1350.salepos.integration.ItemRegistry;
 import se.kth.iv1350.salepos.integration.Printer;
@@ -10,7 +10,7 @@ import se.kth.iv1350.salepos.integration.Printer;
  * One single sale made by one customer and paid with one payment.
  */
 public class Sale {
-    private LocalTime saleTime;
+    private LocalDateTime saleTime;
     private ItemList itemList;
     private Amount totalPriceWithoutVat = new Amount();
     private Amount totalPriceWithVat = new Amount();
@@ -20,7 +20,7 @@ public class Sale {
      * Creates a new instance and sets the current local time of the sale.
      */
     public Sale () {
-        saleTime = LocalTime.now();
+        saleTime = LocalDateTime.now();
         itemList = new ItemList();
     }
     
