@@ -41,7 +41,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void testSearchForItemCorrectTypeReturned() {
+    public void testRegisterItemCorrectTypeReturned() {
         int identifierNumber = 89991;
         ItemID itemID = new ItemID(identifierNumber);
         CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID);
@@ -49,7 +49,7 @@ public class ControllerTest {
     }
     
     @Test
-    public void testSearchForItemCorrectItemInfoReturned() {
+    public void testRegisterItemCorrectItemInfoReturned() {
         int identifierNumber = 89990;
         ItemID itemID = new ItemID(identifierNumber);
         CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID);
@@ -59,7 +59,7 @@ public class ControllerTest {
     }
     
     @Test
-    public void testSearchForItemCorrectRunningTotalReturned() {
+    public void testRegisterItemCorrectRunningTotalReturned() {
         int identifierNumber = 60606;
         ItemID itemID = new ItemID(identifierNumber);
         CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID);
