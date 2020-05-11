@@ -1,11 +1,13 @@
 package se.kth.iv1350.salepos.view;
 
+import java.io.IOException;
 import se.kth.iv1350.salepos.controller.Controller;
 import se.kth.iv1350.salepos.controller.OperationFailedException;
 import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
 import se.kth.iv1350.salepos.model.Amount;
 import se.kth.iv1350.salepos.model.CurrentSaleDTO;
 import se.kth.iv1350.salepos.model.ItemID;
+import se.kth.iv1350.salepos.util.LogHandler;
 
 /**
  * This application does not have a view, instead, this class is a placeholder for the real view. 
@@ -14,14 +16,20 @@ import se.kth.iv1350.salepos.model.ItemID;
 public class View {
     private Controller contr;
     private ErrorMessageHandler errorMessageHandler = new ErrorMessageHandler();
+    private LogHandler logHandler;
     
     /**
      * Creates a new instance.
      * 
      * @param contr The controller that is used for all calls to other layers.
      */
-    public View (Controller contr){
+    public View (Controller contr) throws IOException{
         this.contr = contr;
+        try {
+        this.logHandler = new LogHandler();
+        } catch (IOException exc) {
+            System.out.println("Log handler could not be created.");
+        }
     }
     
     /**
@@ -89,5 +97,6 @@ public class View {
     
     private void handleException(String message, Exception exc) {
         errorMessageHandler.showErrorMessage(message);
+        logHandler.logException(exc);
     }
 }
