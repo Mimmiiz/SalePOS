@@ -40,18 +40,6 @@ public class ItemList {
        }
    }
    
-   /*
-   void incrementItemQuantity (ItemID itemID) {
-       int newItemQuantity;
-
-       for (Item item : list) {
-           if (itemID.checkItemIDMatch(itemID, item.getItemID())) {
-               newItemQuantity = item.getQuantity() + 1;
-               item.setQuantity(newItemQuantity);
-           } 
-       }
-   */
-   
    /** 
     * Saves a new Item to the list. 
     * 
