@@ -12,6 +12,7 @@ import se.kth.iv1350.salepos.model.ItemID;
  */
 public class View {
     private Controller contr;
+    private ErrorMessageHandler errorMessageHandler = new ErrorMessageHandler();
     
     /**
      * Creates a new instance.
@@ -63,7 +64,8 @@ public class View {
             saleInfo = contr.registerItem(itemID);
             printOutSaleInformation(saleInfo);
         } catch (NoSuchItemIdentifierException exc) {
-            System.out.println("ItemID does not exist");
+            handleException("The entered item identifier " + identifierNumber + " does not exist, "
+                    + "please try again.", exc);
         }
     }
    
@@ -79,5 +81,9 @@ public class View {
         System.out.println("Item VAT rate: " + saleInfo.getItemVatRate().getAmount());
         System.out.println("Item quantity: " + saleInfo.getItemQuantity().getAmount());
         System.out.println("Running total including VAT: " + saleInfo.getTotalPriceWithVat().getAmount());
+    }
+    
+    private void handleException(String message, Exception exc) {
+        errorMessageHandler.showErrorMessage(message);
     }
 }
