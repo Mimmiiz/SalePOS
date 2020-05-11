@@ -18,13 +18,19 @@ public class ItemRegistry {
     }
     
     /**
-     * Finds the item with the specified ItemID in the item registry. 
+     * Finds the item with the specified ItemID in the item registry.
      * 
      * @param itemID the specified ItemID.
      * @return An ItemDTO with all the item information.
-     * @throws ItemRegistryException if an item with the specified ItemID did not exist.
+     * @throws ItemRegistryException If an item with the specified ItemID does not exist.
+     * @throws ItemRegistryException If the database call failed.
      */
     public ItemDTO searchForItem(ItemID itemID) throws NoSuchItemIdentifierException {
+        ItemID errorItemID = new ItemID(88888);
+        
+        if (itemID.checkItemIDMatch(itemID, errorItemID)) {
+            throw new ItemRegistryException("Could not connect to the database.");
+        }
         for (ItemDTO itemDTO : itemDTOs) {
             if (itemID.checkItemIDMatch(itemDTO.getItemID(), itemID)) {
                 return new ItemDTO(itemDTO.getName(), itemDTO.getPrice(), itemDTO.getVatRate(), 
@@ -42,6 +48,6 @@ public class ItemRegistry {
         itemDTOs.add(new ItemDTO("Apple", new Amount(5), new Amount(6), new ItemID(89991)));
         itemDTOs.add(new ItemDTO("Banana", new Amount(3), new Amount(12), new ItemID(89990)));
         itemDTOs.add(new ItemDTO("Baguette", new Amount(15), new Amount(25), new ItemID(10001)));
-        itemDTOs.add(new ItemDTO("Milk", new Amount(8), new Amount(12), new ItemID(60606)));   
+        itemDTOs.add(new ItemDTO("Milk", new Amount(8), new Amount(12), new ItemID(60606)));
     }
 }
