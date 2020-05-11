@@ -41,7 +41,7 @@ public class ItemRegistry {
     private void addItems() {
         itemDTOs.add(new ItemDTO("Apple", new Amount(5), new Amount(6), new ItemID(89991)));
         itemDTOs.add(new ItemDTO("Banana", new Amount(3), new Amount(12), new ItemID(89990)));
-        itemDTOs.add(new ItemDTO("French Baguette", new Amount(15), new Amount(25), new ItemID(10001)));
+        itemDTOs.add(new ItemDTO("Baguette", new Amount(15), new Amount(25), new ItemID(10001)));
         itemDTOs.add(new ItemDTO("Milk", new Amount(8), new Amount(12), new ItemID(60606)));   
     }
 }
