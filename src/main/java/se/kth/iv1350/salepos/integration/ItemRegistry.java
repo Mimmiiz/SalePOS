@@ -22,17 +22,16 @@ public class ItemRegistry {
      * 
      * @param itemID the specified ItemID.
      * @return An ItemDTO with all the item information.
+     * @throws ItemRegistryException if an item with the specified ItemID did not exist.
      */
-    public ItemDTO searchForItem(ItemID itemID) {
-        ItemDTO searchedItem = null;
-        int counter = 0;
-        
-        while (itemDTOs.size() > counter && itemDTOs.get(counter) != null) {
-            if (itemID.checkItemIDMatch(itemID, itemDTOs.get(counter).getItemID()))
-                searchedItem = itemDTOs.get(counter);
-            counter++;
+    public ItemDTO searchForItem(ItemID itemID) throws InvalidItemIdentifierException {
+        for (ItemDTO itemDTO : itemDTOs) {
+            if (itemID.checkItemIDMatch(itemDTO.getItemID(), itemID)) {
+                return new ItemDTO(itemDTO.getName(), itemDTO.getPrice(), itemDTO.getVatRate(), 
+                        itemDTO.getItemID());  
+            }
         }
-        return searchedItem;
+        throw new InvalidItemIdentifierException (itemID);
     }   
     
     /**
@@ -42,7 +41,7 @@ public class ItemRegistry {
     private void addItems() {
         itemDTOs.add(new ItemDTO("Apple", new Amount(5), new Amount(6), new ItemID(89991)));
         itemDTOs.add(new ItemDTO("Banana", new Amount(3), new Amount(12), new ItemID(89990)));
-        itemDTOs.add(new ItemDTO("Bread", new Amount(15), new Amount(25), new ItemID(10001)));
-        itemDTOs.add(new ItemDTO("Milk", new Amount(8), new Amount(12), new ItemID(60606)));          
+        itemDTOs.add(new ItemDTO("French Baguette", new Amount(15), new Amount(25), new ItemID(10001)));
+        itemDTOs.add(new ItemDTO("Milk", new Amount(8), new Amount(12), new ItemID(60606)));   
     }
 }
