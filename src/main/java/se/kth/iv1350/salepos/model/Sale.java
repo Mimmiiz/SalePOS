@@ -17,6 +17,7 @@ public class Sale {
     private Amount totalPriceWithoutVat = new Amount();
     private Amount totalPriceWithVat = new Amount();
     private Amount saleVatRate = new Amount();
+    private Amount totalPriceWithDiscount = new Amount();
     private List<SaleObserver> saleObservers = new ArrayList<>();
     
     /**
@@ -61,8 +62,8 @@ public class Sale {
      * @return A CurrentSaleDTO that contains current sale information.
      */
     public CurrentSaleDTO getSaleInfo() {
-        CurrentSaleDTO saleInfo = new CurrentSaleDTO(totalPriceWithVat);
-        
+        CurrentSaleDTO saleInfo = new CurrentSaleDTO(totalPriceWithVat, totalPriceWithDiscount);
+
         return saleInfo;
     }
     
@@ -73,28 +74,46 @@ public class Sale {
      * @return The amount of change.
      */
     public Amount pay(CashPayment payment) {
-        Amount totalPrice = new Amount(totalPriceWithVat.getAmount());
+        Amount totalPrice;
+                
+        if (totalPriceWithDiscount.getAmount() != 0)
+            totalPrice = new Amount(totalPriceWithDiscount);
+        else
+            totalPrice = new Amount(totalPriceWithVat);
+        
         payment.setTotalPrice(totalPrice);
-        notifyObservers();
+        notifyObservers(totalPrice);
         Amount change = calculateChange(payment);
-        
-        
+            
         return change;
     }
     
     /**
      * The specified observers will be notified when a sale is paid.
      * 
-     * @param saleObserver The observers to notify.
+     * @param saleObservers The observers to notify.
      */
     public void addSaleObservers(List<SaleObserver> saleObservers) {
         this.saleObservers.addAll(saleObservers);
     }
     
-    private void notifyObservers() {
+    private void notifyObservers(Amount totalPrice) {
         for (SaleObserver observer : saleObservers) {
-            observer.updateTotalRevenue(totalPriceWithVat);
+            observer.updateTotalRevenue(totalPrice);
         }
+    }
+    
+    public List<Item> getSaleInfoForDiscounts() {
+       return itemList.getList();
+    }
+    
+    /**
+     * Sets the total price with discount if the price has been discounted.
+     * 
+     * @param totalPriceWithDiscount 
+     */
+    public void setTotalPriceWithDiscount (Amount totalPriceWithDiscount) {
+        this.totalPriceWithDiscount = new Amount(totalPriceWithDiscount);
     }
     
     /**
@@ -114,7 +133,7 @@ public class Sale {
      * @param printer The printer that will print the receipt.
      */
     public void printReceipt(Printer printer) {
-        Receipt receipt = new Receipt(saleTime, itemList.getList(), totalPriceWithVat, saleVatRate);
+        Receipt receipt = new Receipt(saleTime, itemList.getList(), totalPriceWithVat, totalPriceWithDiscount, saleVatRate);
         printer.print(receipt);
     }
     
@@ -125,7 +144,7 @@ public class Sale {
      * @return The amount of change.
      */
     private Amount calculateChange(CashPayment payment) {
-        Amount totalPrice = new Amount(totalPriceWithVat.getAmount());
+        Amount totalPrice = payment.getTotalPrice();
         Amount change = payment.getPaidAmount().subtract(totalPrice);
         
         return change;
