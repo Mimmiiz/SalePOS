@@ -1,27 +1,33 @@
 package se.kth.iv1350.salepos.model;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.time.LocalDateTime;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Disabled;
 import se.kth.iv1350.salepos.integration.ItemRegistry;
 import se.kth.iv1350.salepos.integration.ItemRegistryException;
 import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
+import se.kth.iv1350.salepos.integration.Printer;
 import se.kth.iv1350.salepos.integration.RegistryCreator;
 
 public class SaleTest {
+    ByteArrayOutputStream outContent;
+    PrintStream originalSysOut;
     private Sale instanceToTest;
-    private ItemID itemID;
-    private int identifierNumber = 89991;
     private RegistryCreator regCreator;
     private ItemRegistry itemReg;
     private ItemList itemList;
     
     @BeforeEach
     public void setUp() {
+        originalSysOut = System.out;
+        outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        
         instanceToTest = new Sale();
-        itemID = new ItemID(identifierNumber);
         regCreator = new RegistryCreator();
         itemReg = regCreator.getItemRegistry();
         itemList = new ItemList();
@@ -29,8 +35,9 @@ public class SaleTest {
     
     @AfterEach
     public void tearDown() {
+        outContent = null;
+        System.setOut(originalSysOut);
         instanceToTest = null;
-        itemID = null;
         regCreator = null;
         itemReg = null;
         itemList = null;
@@ -38,6 +45,8 @@ public class SaleTest {
 
     @Test
     public void testRegisterItemReturnValue() {
+        int identifierNumber = 89991;
+        ItemID itemID = new ItemID(identifierNumber);
         try {
             CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID, itemReg);
             assertTrue(saleInfoInstance instanceof CurrentSaleDTO, "System did not return the correct value.");
@@ -98,11 +107,34 @@ public class SaleTest {
                 + "amount of change.");
     }
     
-    @Disabled
+    @Test
     public void testGetCompletedSaleInfo() {
+        CompletedSaleDTO completedSaleInfo = instanceToTest.getCompletedSaleInfo();
+        assertTrue(completedSaleInfo instanceof CompletedSaleDTO, "The completed sale info was not "
+                + "created correctly.");
     }
     
-    @Disabled
-    public void testPrintReceipt() {}
+    @Test
+    public void testPrintReceipt() {
+        int itemIdentifier = 89991;
+        ItemID itemID = new ItemID(itemIdentifier);
+        try {
+            instanceToTest.registerItem(itemID, itemReg);
+        } catch (NoSuchItemIdentifierException | ItemRegistryException e) {
+            fail("Got exception.");
+            e.printStackTrace();
+        }
+        instanceToTest.printReceipt(new Printer());
+        String result = outContent.toString();
+        LocalDateTime saleTime = LocalDateTime.now();
+        String expectedResult = ("\n   ITEM:\tUNIT PRICE:\tTOTAL:\n");
+        assertTrue(result.contains(expectedResult), "Wrong printout.");
+        assertTrue(result.contains("Apple"), "Wrong printout.");
+        assertTrue(result.contains(Integer.toString(saleTime.getYear())), "Wrong sale year.");
+        assertTrue(result.contains(Integer.toString(saleTime.getDayOfMonth())), "Wrong sale day.");
+        assertTrue(result.contains(Integer.toString(saleTime.getMonthValue())), "Wrong sale month.");
+        assertTrue(result.contains(Integer.toString(saleTime.getHour())), "Wrong sale hour.");
+        assertTrue(result.contains(Integer.toString(saleTime.getMinute())), "Wrong sale minute.");
+    }
 }
 
