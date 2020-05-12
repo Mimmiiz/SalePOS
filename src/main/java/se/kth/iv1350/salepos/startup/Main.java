@@ -18,7 +18,7 @@ public class Main {
      * 
      * @param args The application does not take any command line parameters.
      */
-    public static void main (String[] args){
+    public static void main (String[] args) {
         try {
             RegistryCreator registryCreator = new RegistryCreator();
             ExternalCreator externalCreator = new ExternalCreator();
@@ -29,7 +29,6 @@ public class Main {
         } catch (IOException exc) {
             System.out.println("The application could not start.");
             exc.printStackTrace();
-            }
-    }
-    
+        }
+    }   
 }
