@@ -1,5 +1,6 @@
 package se.kth.iv1350.salepos.controller;
 
+import se.kth.iv1350.salepos.integration.DiscountRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import se.kth.iv1350.salepos.integration.*;
@@ -90,6 +91,16 @@ public class Controller {
         return change;
     }
     
+    public CurrentSaleDTO requestDiscount(CustomerID customerID) {
+        List<Item> items = sale.getSaleInfoForDiscounts();
+        Amount totalPrice = sale.getSaleInfo().getTotalPriceWithVat();
+        Amount totalPriceAfterDiscount = discountRegistry.calculateEligibleDiscount(customerID, items, totalPrice);
+        if (totalPriceAfterDiscount.getAmount() != totalPrice.getAmount()) {
+            sale.setTotalPriceWithDiscount(totalPriceAfterDiscount);
+        }
+        return sale.getSaleInfo();
+    }
+    
     /**
      * The specified observer will be notified when the sale has been paid.
      * There will only be notifications for sales after this method has been called.
@@ -107,5 +118,9 @@ public class Controller {
      */
     Sale getSale() {
         return sale;
+    }
+
+    private Exception OperationFailedException(String could_not_add_discounts_customer_might_no) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
