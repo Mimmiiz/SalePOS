@@ -43,7 +43,7 @@ public class Item {
      * 
      * @return The itemID of the specified Item.
      */
-    ItemID getItemID() {
+    public ItemID getItemID() {
         return new ItemID(this.itemID);
     }
     
@@ -79,7 +79,7 @@ public class Item {
      * 
      * @return The value of quantity.
      */
-    Amount getQuantity() {
+    public Amount getQuantity() {
         return new Amount(this.quantity);
     }
     
