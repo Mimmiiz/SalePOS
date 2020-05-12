@@ -10,26 +10,29 @@ import java.util.ArrayList;
  * Name, quantity and price for each item. Total price for the entire sale and VAT for the entire sale.
  */
 public class Receipt {
-    private String storeAddress = "Super Street 10, Super Town, 19021";
-    private String storeName = "Super Store";   
-    private LocalDateTime saleTime;
-    private ArrayList<Item> list;
-    private Amount totalPrice;
-    private Amount totalVat;
+    private final String storeAddress = "Super Street 10, Super Town, 19021";
+    private final String storeName = "Super Store";   
+    private final LocalDateTime saleTime;
+    private final ArrayList<Item> list;
+    private final Amount totalPrice;
+    private final Amount totalPriceWithDiscount;
+    private final Amount totalVat;
 
     /**
      * Creates a new instance.
      * 
      * @param saleTime The time of the sale.
      * @param list The list of the items of the sale.
-     * @param totalPrice The total price of the salem, including VAT.
+     * @param totalPrice The total price of the sale, including VAT.
+     * @param totalPriceWithDiscount The total price of the sale with discount. 
      * @param totalVat The total VAT of the sale.
      */
-    public Receipt(LocalDateTime saleTime, ArrayList<Item> list, Amount totalPrice, Amount totalVat) {
+    public Receipt(LocalDateTime saleTime, ArrayList<Item> list, Amount totalPrice, Amount totalPriceWithDiscount, Amount totalVat) {
         this.saleTime = saleTime;
         this.list = list;
-        this.totalPrice = totalPrice;
-        this.totalVat = totalVat;
+        this.totalPrice = new Amount(totalPrice);
+        this.totalPriceWithDiscount = new Amount(totalPriceWithDiscount);
+        this.totalVat = new Amount(totalVat);
     }
     
     @Override
@@ -49,6 +52,8 @@ public class Receipt {
         }
         builder.append("------------------------------------------\n");
         builder.append("Total:\t\t\t\t").append(totalPrice.getAmount());
+        if (totalPriceWithDiscount.getAmount() != 0)
+            builder.append("\nTotal with discount:\t\t").append(totalPriceWithDiscount.getAmount());
         builder.append("\nTax:\t\t\t\t").append(totalVat.getAmount()).append("%");
         builder.append("\n------------------------------------------\n");
         return builder.toString();
