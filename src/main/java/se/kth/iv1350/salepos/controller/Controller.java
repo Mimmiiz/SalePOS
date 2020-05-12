@@ -1,21 +1,9 @@
 package se.kth.iv1350.salepos.controller;
 
-import se.kth.iv1350.salepos.integration.DiscountRegistry;
-import se.kth.iv1350.salepos.integration.ExternalAccount;
-import se.kth.iv1350.salepos.integration.ExternalCreator;
-import se.kth.iv1350.salepos.integration.ExternalInventory;
-import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
-import se.kth.iv1350.salepos.integration.ItemRegistry;
-import se.kth.iv1350.salepos.integration.ItemRegistryException;
-import se.kth.iv1350.salepos.integration.Printer;
-import se.kth.iv1350.salepos.integration.RegistryCreator;
-import se.kth.iv1350.salepos.model.Amount;
-import se.kth.iv1350.salepos.model.CashPayment;
-import se.kth.iv1350.salepos.model.CashRegister;
-import se.kth.iv1350.salepos.model.CompletedSaleDTO;
-import se.kth.iv1350.salepos.model.CurrentSaleDTO;
-import se.kth.iv1350.salepos.model.ItemID;
-import se.kth.iv1350.salepos.model.Sale;
+import java.util.ArrayList;
+import java.util.List;
+import se.kth.iv1350.salepos.integration.*;
+import se.kth.iv1350.salepos.model.*;
 
 /**
  * This is the application's only controller class. All calls to the model pass through here.
@@ -28,6 +16,7 @@ public class Controller {
     private Printer printer;
     private CashRegister cashRegister;
     private Sale sale;
+    private List<SaleObserver> saleObservers = new ArrayList<>();
     
     /**
      * Creates a new instance. 
@@ -50,6 +39,7 @@ public class Controller {
      */
     public void startSale() {
         sale = new Sale();
+        sale.addSaleObservers(saleObservers);
     }
     
     /**
@@ -98,6 +88,16 @@ public class Controller {
         sale.printReceipt(printer);
         
         return change;
+    }
+    
+    /**
+     * The specified observer will be notified when the sale has been paid.
+     * There will only be notifications for sales after this method has been called.
+     * 
+     * @param saleObserver The observer to notify.
+     */
+    public void addSaleObserver(SaleObserver saleObserver) {
+        saleObservers.add(saleObserver);
     }
 
     /**
