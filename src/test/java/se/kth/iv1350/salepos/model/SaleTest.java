@@ -66,7 +66,7 @@ public class SaleTest {
         } catch (NoSuchItemIdentifierException e) {
             assertTrue(e.getMessage().contains("" + identifierNumber), "Wrong exception message,"
                     + " does not contain the specified item identifier: " + e.getMessage());
-            assertTrue(e.getItemIDThatDoesNotExist().checkItemIDMatch(itemID, itemID), " Wrong item identifier"
+            assertTrue(itemID.checkItemIDMatch(itemID, e.getItemIDThatDoesNotExist()), " Wrong item identifier"
                     + "is specified: " + e.getItemIDThatDoesNotExist());
         } catch (ItemRegistryException e) {
             fail("Got exception");
