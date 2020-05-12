@@ -82,6 +82,15 @@ public class Sale {
         return change;
     }
     
+    /**
+     * The specified observers will be notified when a sale is paid.
+     * 
+     * @param saleObserver The observers to notify.
+     */
+    public void addSaleObservers(List<SaleObserver> saleObservers) {
+        this.saleObservers.addAll(saleObservers);
+    }
+    
     private void notifyObservers() {
         for (SaleObserver observer : saleObservers) {
             observer.updateTotalRevenue(totalPriceWithVat);
