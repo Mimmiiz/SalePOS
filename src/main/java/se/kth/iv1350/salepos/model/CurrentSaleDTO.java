@@ -44,6 +44,15 @@ public final class CurrentSaleDTO {
     public Amount getTotalPriceWithVat() {
         return new Amount(totalPriceWithVat);
     }
+    
+    /**
+     * Get the value of totalPriceWithDiscount.
+     * 
+     * @return The calue of totalPriceWithDiscount. 
+     */
+    public Amount getTotalPriceWithDiscount() {
+        return new Amount(totalPriceWithDiscount);
+    }
 
     /**
      * Get the value of itemName.
