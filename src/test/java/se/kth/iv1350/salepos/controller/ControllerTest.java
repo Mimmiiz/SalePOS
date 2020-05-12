@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import se.kth.iv1350.salepos.integration.ExternalCreator;
+import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
 import se.kth.iv1350.salepos.integration.Printer;
 import se.kth.iv1350.salepos.integration.RegistryCreator;
 import se.kth.iv1350.salepos.model.Amount;
@@ -41,32 +42,80 @@ public class ControllerTest {
     }
 
     @Test
-    public void testRegisterItemCorrectTypeReturned() {
+    public void testRegisterItemCorrectTypeReturned() /*throws NoSuchItemIdentifierException */{
         int identifierNumber = 89991;
         ItemID itemID = new ItemID(identifierNumber);
-        CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID);
-        assertTrue(saleInfoInstance instanceof CurrentSaleDTO, "Sale information was not retreived correctly.");
+        try {
+            CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID);
+            assertTrue(saleInfoInstance instanceof CurrentSaleDTO, "Sale information was not retreived correctly.");
+        } catch (NoSuchItemIdentifierException | OperationFailedException e) {
+            fail("Got exception.");
+            e.printStackTrace();
+        }
     }
     
     @Test
     public void testRegisterItemCorrectItemInfoReturned() {
         int identifierNumber = 89990;
         ItemID itemID = new ItemID(identifierNumber);
-        CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID);
-        String expectedResult = "Banana";
-        String result = saleInfoInstance.getItemName();
-        assertEquals(expectedResult, result, "The expected item info was not retrieved.");
+        try {
+            CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID);
+            String expectedResult = "Banana";
+            String result = saleInfoInstance.getItemName();
+            assertEquals(expectedResult, result, "The expected item info was not retrieved.");
+        } catch (NoSuchItemIdentifierException | OperationFailedException e) {
+            fail("Got exception.");
+            e.printStackTrace();
+        }
     }
     
     @Test
     public void testRegisterItemCorrectRunningTotalReturned() {
         int identifierNumber = 60606;
         ItemID itemID = new ItemID(identifierNumber);
-        CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID);
-        double expectedResult = 8.96;
-        double result = saleInfoInstance.getTotalPriceWithVat().getAmount();
-        double marginOfError = 0.01;
-        assertEquals(expectedResult, result, marginOfError, "The expected running total (incl. VAT) was not retrieved.)");
+        try {
+            CurrentSaleDTO saleInfoInstance = instanceToTest.registerItem(itemID);
+            double expectedResult = 8.96;
+            double result = saleInfoInstance.getTotalPriceWithVat().getAmount();
+            double marginOfError = 0.01;
+            assertEquals(expectedResult, result, marginOfError, "The expected running total (incl. VAT) was not retrieved.)");
+        } catch (NoSuchItemIdentifierException | OperationFailedException e) {
+            fail("Got exception.");
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testRegisterItemThatDoesNotExist() {
+        int identifierNumber = 10000;
+        ItemID itemID = new ItemID(identifierNumber);
+        try {
+            instanceToTest.registerItem(itemID);
+            fail("Registered an item that did not exist.");
+        } catch (NoSuchItemIdentifierException e) {
+            assertTrue(e.getMessage().contains("" + identifierNumber), "Wrong exception message,"
+                    + " does not contain the specified item identifier: " + e.getMessage());
+            assertTrue(e.getItemIDThatDoesNotExist().checkItemIDMatch(itemID, itemID), " Wrong item identifier"
+                    + "is specified: " + e.getItemIDThatDoesNotExist());
+        } catch (OperationFailedException e) {
+            fail("Got exception.");
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testRegisterItemThatGivesDatabaseError() {
+        int identifierNumber = 88888;
+        ItemID itemID = new ItemID(identifierNumber);
+        try {
+            instanceToTest.registerItem(itemID);
+            fail("Could register an item.");
+        } catch (NoSuchItemIdentifierException e) {
+            fail("Got exception.");
+            e.printStackTrace();
+        } catch (OperationFailedException e) {
+            assertTrue(e.getMessage().contains("could not be registered"), "Wrong exception message");
+        }
     }
     
     @Test
@@ -95,12 +144,17 @@ public class ControllerTest {
         int identifierNumber = 89991;
         double paidAmountValue = 20.0;
         ItemID itemID = new ItemID(identifierNumber);
-        instanceToTest.registerItem(itemID);
-        instanceToTest.endSale();
-        Amount paidAmountInstance = new Amount(paidAmountValue);
-        Amount expectedResult = new Amount(14.7);
-        Amount result = instanceToTest.pay(paidAmountInstance);
-        double marginOfError = 0.01;
-        assertEquals(expectedResult.getAmount(), result.getAmount(), marginOfError, "Not the expected value of the returned amount." );
+        try {
+            instanceToTest.registerItem(itemID);
+            instanceToTest.endSale();
+            Amount paidAmountInstance = new Amount(paidAmountValue);
+            Amount expectedResult = new Amount(14.7);
+            Amount result = instanceToTest.pay(paidAmountInstance);
+            double marginOfError = 0.01;
+            assertEquals(expectedResult.getAmount(), result.getAmount(), marginOfError, "Not the expected value of the returned amount." );
+        } catch (NoSuchItemIdentifierException | OperationFailedException e) {
+            fail("Got exception.");
+            e.printStackTrace();
+        }
     }
 }
