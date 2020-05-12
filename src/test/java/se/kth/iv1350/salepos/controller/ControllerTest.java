@@ -104,7 +104,7 @@ public class ControllerTest {
     }
     
     @Test
-    public void testRegisterItemThatGivesDatabaseError() {
+    public void testRegisterItemThatGivesRegistryError() {
         int identifierNumber = 88888;
         ItemID itemID = new ItemID(identifierNumber);
         try {
