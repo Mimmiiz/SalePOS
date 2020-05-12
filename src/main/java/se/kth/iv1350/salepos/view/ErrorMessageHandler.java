@@ -17,7 +17,7 @@ public class ErrorMessageHandler {
      */
     void showErrorMessage (String message) {
         StringBuilder errorMessageBuilder = new StringBuilder();
-        errorMessageBuilder.append("---------------- CASHIER NOTIFICATION ----------------\n");
+        errorMessageBuilder.append("-------------------- NOTIFICATION --------------------\n");
         errorMessageBuilder.append(getLocalDateAndTime());
         errorMessageBuilder.append(", ERROR: \n");
         errorMessageBuilder.append(message).append("\n");
