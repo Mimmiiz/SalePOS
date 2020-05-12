@@ -1,6 +1,8 @@
 package se.kth.iv1350.salepos.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
 import se.kth.iv1350.salepos.integration.ItemDTO;
 import se.kth.iv1350.salepos.integration.ItemRegistry;
@@ -15,6 +17,7 @@ public class Sale {
     private Amount totalPriceWithoutVat = new Amount();
     private Amount totalPriceWithVat = new Amount();
     private Amount saleVatRate = new Amount();
+    private List<SaleObserver> saleObservers = new ArrayList<>();
     
     /**
      * Creates a new instance and sets the current local time of the sale.
@@ -72,9 +75,17 @@ public class Sale {
     public Amount pay(CashPayment payment) {
         Amount totalPrice = new Amount(totalPriceWithVat.getAmount());
         payment.setTotalPrice(totalPrice);
+        notifyObservers();
         Amount change = calculateChange(payment);
         
+        
         return change;
+    }
+    
+    private void notifyObservers() {
+        for (SaleObserver observer : saleObservers) {
+            observer.updateTotalRevenue(totalPriceWithVat);
+        }
     }
     
     /**
