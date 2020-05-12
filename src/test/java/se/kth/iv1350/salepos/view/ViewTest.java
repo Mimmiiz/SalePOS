@@ -1,6 +1,7 @@
 package se.kth.iv1350.salepos.view;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -18,11 +19,16 @@ public class ViewTest {
    
     @BeforeEach
     public void setUp() {
-        RegistryCreator regCreator = new RegistryCreator();
-        ExternalCreator extCreator = new ExternalCreator();
-        Printer printer = new Printer();
-        Controller contr = new Controller(regCreator, extCreator, printer);
-        instanceToTest = new View(contr);
+        try {
+            RegistryCreator regCreator = new RegistryCreator();
+            ExternalCreator extCreator = new ExternalCreator();
+            Printer printer = new Printer();
+            Controller contr = new Controller(regCreator, extCreator, printer);
+            instanceToTest = new View(contr);
+        } catch (IOException e) {
+            System.out.println("Could not set up the test.");
+            e.printStackTrace();
+        }
         
         printoutBuffer = new ByteArrayOutputStream();
         PrintStream inMemSysOut = new PrintStream(printoutBuffer);
