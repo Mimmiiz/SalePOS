@@ -6,6 +6,7 @@ import se.kth.iv1350.salepos.controller.OperationFailedException;
 import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
 import se.kth.iv1350.salepos.model.Amount;
 import se.kth.iv1350.salepos.model.CurrentSaleDTO;
+import se.kth.iv1350.salepos.model.CustomerID;
 import se.kth.iv1350.salepos.model.ItemID;
 import se.kth.iv1350.salepos.util.LogHandler;
 
@@ -52,8 +53,13 @@ public class View {
         System.out.println("Adds an item identifier that does not exist.");
         addNewItemID(55555);
         
-        saleInfo = contr.endSale();
+        System.out.println("Cashier requests discount.");
+        saleInfo = contr.requestDiscount(new CustomerID(980325));
+        System.out.println("Total price including VAT: " + saleInfo.getTotalPriceWithVat().getAmount());
+        System.out.println("Total price with the added discount: " + saleInfo.getTotalPriceWithDiscount().getAmount());
+        
         System.out.println("The sale has ended.");
+        saleInfo = contr.endSale();
         System.out.println("Output: ");
         System.out.println("Total price including VAT: " + saleInfo.getTotalPriceWithVat().getAmount());
         
