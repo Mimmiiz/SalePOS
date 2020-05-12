@@ -22,9 +22,11 @@ public class View {
      * Creates a new instance.
      * 
      * @param contr The controller that is used for all calls to other layers.
+     * @throws java.io.IOException If log handler can not be created.
      */
     public View (Controller contr) throws IOException{
         this.contr = contr;
+        contr.addSaleObserver(new TotalRevenueView());
         try {
         this.logHandler = new LogHandler();
         } catch (IOException exc) {
