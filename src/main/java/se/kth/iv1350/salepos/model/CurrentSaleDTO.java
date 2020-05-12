@@ -5,6 +5,7 @@ package se.kth.iv1350.salepos.model;
  */
 public final class CurrentSaleDTO {
     private Amount totalPriceWithVat;
+    private Amount totalPriceWithDiscount;
     private String itemName;
     private Amount itemPrice;
     private Amount itemVatRate;
@@ -25,13 +26,14 @@ public final class CurrentSaleDTO {
     }
     
     /**
-     * Creates a new instance. Specifically used for endSale operation where only total price with 
-     * VAT is presented. 
+     * Creates a new instance. Specifically used for endSale and discountRequest operation 
+     * where only total price with VAT and total price with discount is presented. 
      * 
      * @param totalPriceWithVat The total price with VAT.
      */
-    public CurrentSaleDTO(Amount totalPriceWithVat) {
+    public CurrentSaleDTO(Amount totalPriceWithVat, Amount totalPriceWithDiscount) {
         this.totalPriceWithVat = new Amount(totalPriceWithVat);
+        this.totalPriceWithDiscount = new Amount(totalPriceWithDiscount);
     }
 
     /**
