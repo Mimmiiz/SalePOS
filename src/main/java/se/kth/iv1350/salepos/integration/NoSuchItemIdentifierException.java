@@ -3,7 +3,7 @@ package se.kth.iv1350.salepos.integration;
 import se.kth.iv1350.salepos.model.ItemID;
 
 /**
- * Throw when trying to find an item with an item identifier that does not exist.
+ * Thrown when trying to find an item with an item identifier that does not exist.
  */
 public class NoSuchItemIdentifierException extends Exception {
     private ItemID itemIDThatDoesNotExist;
@@ -23,6 +23,5 @@ public class NoSuchItemIdentifierException extends Exception {
      */
     public ItemID getItemIDThatDoesNotExist() {
         return itemIDThatDoesNotExist;
-    }
-    
+    }   
 }
