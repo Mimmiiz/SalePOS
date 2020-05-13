@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import se.kth.iv1350.salepos.model.Amount;
 
 public class SoapDiscountTest {
-    SoapDiscount instanceToTest = new SoapDiscount();
+    private SoapDiscount instanceToTest = new SoapDiscount();
 
     @Test
     public void testCalculateDiscount() {
