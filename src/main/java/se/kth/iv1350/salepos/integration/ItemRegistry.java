@@ -49,6 +49,6 @@ public class ItemRegistry {
         itemDTOs.add(new ItemDTO("Banana", new Amount(3), new Amount(12), new ItemID(89990)));
         itemDTOs.add(new ItemDTO("Baguette", new Amount(15), new Amount(25), new ItemID(10001)));
         itemDTOs.add(new ItemDTO("Milk", new Amount(8), new Amount(12), new ItemID(60606)));
-        itemDTOs.add(new ItemDTO("Soap", new Amount(25), new Amount(25), new ItemID(70707)));
+        itemDTOs.add(new ItemDTO("Hand Soap", new Amount(25), new Amount(25), new ItemID(70707)));
     }
 }
