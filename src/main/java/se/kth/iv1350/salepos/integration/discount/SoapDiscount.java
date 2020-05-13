@@ -1,9 +1,7 @@
 package se.kth.iv1350.salepos.integration.discount;
 
 import se.kth.iv1350.salepos.integration.ItemDTO;
-import se.kth.iv1350.salepos.integration.discount.Discounter;
 import se.kth.iv1350.salepos.model.Amount;
-import se.kth.iv1350.salepos.model.CustomerID;
 import se.kth.iv1350.salepos.model.ItemID;
 
 /**
@@ -11,7 +9,7 @@ import se.kth.iv1350.salepos.model.ItemID;
  * they will get 1 soap for free.
  */
 class SoapDiscount implements Discounter {
-    private final ItemDTO soap = new ItemDTO("Soap", new Amount(25), new Amount(1.25), new ItemID(70707));
+    private final ItemDTO soap = new ItemDTO("Hand Soap", new Amount(25), new Amount(1.25), new ItemID(70707));
 
     /**
      * Calculates the new price with the added discount.
