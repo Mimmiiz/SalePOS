@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AmountTest {
-    Amount firstNumber = new Amount(15);
-    Amount secondNumber = new Amount(4);
+    private Amount firstNumber = new Amount(15);
+    private Amount secondNumber = new Amount(4);
 
     @Test
     public void testSubtract() {
