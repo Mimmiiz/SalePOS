@@ -7,7 +7,7 @@ import java.util.List;
  * The DTO can only be created in the model layer.
  */
 public class SaleInfoForDiscountDTO {
-    public final List<Item> items;
+    private final List<Item> items;
     
     /**
      * Creates a new instance.
