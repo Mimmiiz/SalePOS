@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Disabled;
 import se.kth.iv1350.salepos.integration.ItemDTO;
 import se.kth.iv1350.salepos.integration.ItemRegistry;
 import se.kth.iv1350.salepos.integration.RegistryCreator;
@@ -35,9 +34,9 @@ public class ItemListTest {
         itemRegistry = null;
     }
     
-    @Disabled
+    @Test
     public void testSearchExistingItemIDNoItemsInList() {
-        ItemID itemIDInstance = new ItemID(89991);
+        ItemID itemIDInstance = new ItemID(60712);
         boolean result = instanceToTest.searchExistingItemID(itemIDInstance);
         assertFalse(result, "The result is not the expected result.");
     }
