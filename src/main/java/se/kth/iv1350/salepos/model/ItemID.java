@@ -4,7 +4,7 @@ package se.kth.iv1350.salepos.model;
  * This class represents an item identifier.  Each item has a unique item ID.
  */
 public class ItemID {
-    int identifierNumber;
+    private int identifierNumber;
     
     /**
      * Creates a new instance.
