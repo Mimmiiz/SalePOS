@@ -29,6 +29,9 @@ public class LogHandler {
         }
     }
     
+    /**
+     * @return The only instance of the <code>LogHanlder</code>.
+    */
     public static LogHandler getLogHandler() {
         return LOG_HANDLER_INSTANCE;
     }
