@@ -9,10 +9,10 @@ import se.kth.iv1350.salepos.integration.ItemRegistry;
 import se.kth.iv1350.salepos.integration.RegistryCreator;
 
 public class ItemListTest {
-    ItemList instanceToTest;
-    Sale sale;
-    RegistryCreator regCreator;
-    ItemRegistry itemRegistry;
+    private ItemList instanceToTest;
+    private Sale sale;
+    private RegistryCreator regCreator;
+    private ItemRegistry itemRegistry;
     
     @BeforeEach
     public void setUp() {
