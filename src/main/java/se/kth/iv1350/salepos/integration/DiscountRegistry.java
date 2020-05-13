@@ -60,7 +60,7 @@ public class DiscountRegistry {
         ItemID soapItemID = new ItemID(70707);
         for (Item item : items) {
             if (soapItemID.checkItemIDMatch(soapItemID, item.getItemID()) 
-                    && item.getQuantity().getAmount() == 2) {
+                    && item.getQuantity().getAmount() >= 2) {
                 return true;
             }
         }
