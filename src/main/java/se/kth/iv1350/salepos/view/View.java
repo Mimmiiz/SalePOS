@@ -3,7 +3,7 @@ package se.kth.iv1350.salepos.view;
 import java.io.IOException;
 import se.kth.iv1350.salepos.controller.Controller;
 import se.kth.iv1350.salepos.controller.OperationFailedException;
-import se.kth.iv1350.salepos.integration.NoEligibleDiscountException;
+import se.kth.iv1350.salepos.model.NoEligibleDiscountException;
 import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
 import se.kth.iv1350.salepos.model.Amount;
 import se.kth.iv1350.salepos.model.CurrentSaleDTO;
