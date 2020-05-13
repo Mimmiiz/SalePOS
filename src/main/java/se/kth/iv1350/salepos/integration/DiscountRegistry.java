@@ -1,5 +1,6 @@
 package se.kth.iv1350.salepos.integration;
 
+import java.util.ArrayList;
 import java.util.List;
 import se.kth.iv1350.salepos.integration.discount.DiscountFactory;
 import se.kth.iv1350.salepos.integration.discount.Discounter;
@@ -26,27 +27,20 @@ public class DiscountRegistry {
      * @return The total price if the sale with added discounts.
      * @throws NoEligibleDiscountException If the customer is not eligible for any discounts.
      */
-    public Amount calculateEligibleDiscount(CustomerID customerID, SaleInfoForDiscountDTO saleInfo) throws 
-            NoEligibleDiscountException {
-        Amount totalPriceAfterDiscount = new Amount(saleInfo.getTotalPriceWithVat());
-        DiscountFactory discountFactory = DiscountFactory.getFactory();   
+    public List<Discounter> getEligibleDiscount(CustomerID customerID, SaleInfoForDiscountDTO saleInfo) {
+        DiscountFactory discountFactory = DiscountFactory.getFactory();
+        List <Discounter> discounts = new ArrayList<>();
         
         if (checkForBaguetteDiscount(customerID, saleInfo.getItems())) {
-            Discounter discounter = discountFactory.getDiscount("Baguette Discount");
-            totalPriceAfterDiscount = discounter.calculateDiscount(totalPriceAfterDiscount);
+            discounts.add(discountFactory.getDiscount("Baguette Discount"));
         }
         if (checkForSoapDiscount(saleInfo.getItems())) {
-            Discounter discounter = discountFactory.getDiscount("Soap Discount");
-            totalPriceAfterDiscount = discounter.calculateDiscount(totalPriceAfterDiscount);
+            discounts.add(discountFactory.getDiscount("Soap Discount"));
         }
         if (checkForWholeSaleDiscount(customerID)) {
-            Discounter discounter = discountFactory.getDiscount("Whole Sale Discount");
-            totalPriceAfterDiscount = discounter.calculateDiscount(totalPriceAfterDiscount);
+            discounts.add(discountFactory.getDiscount("Whole Sale Discount"));
         }
-        else
-            throw new NoEligibleDiscountException(customerID);
-        
-        return totalPriceAfterDiscount;
+        return discounts;
     }
     
     private boolean checkForBaguetteDiscount (CustomerID customerID, List<Item> items) {
