@@ -8,6 +8,14 @@ import java.time.format.FormatStyle;
  * This class handles error messages to the user.
  */
 public class ErrorMessageHandler {
+    private static final ErrorMessageHandler HANDLER_INSTANCE = new ErrorMessageHandler();
+    
+    private ErrorMessageHandler() {
+    }
+    
+    public static ErrorMessageHandler getHandler() {
+        return HANDLER_INSTANCE;
+    }
     
     /**
      * Prints out error message to the user interface.
