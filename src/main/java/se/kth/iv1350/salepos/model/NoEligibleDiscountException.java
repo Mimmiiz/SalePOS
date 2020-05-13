@@ -11,8 +11,6 @@ public class NoEligibleDiscountException extends Exception {
     /** 
      * Creates a new instance that specifies that the customer with the specified customer ID is not eligible
      * for any discounts.
-     * 
-     * @param customerID The ID of the customer.
      */
     public NoEligibleDiscountException() {
         super("Customer is not eligible for any discounts.");
