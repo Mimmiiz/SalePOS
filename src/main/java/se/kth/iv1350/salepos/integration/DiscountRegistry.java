@@ -7,6 +7,7 @@ import se.kth.iv1350.salepos.model.Amount;
 import se.kth.iv1350.salepos.model.CustomerID;
 import se.kth.iv1350.salepos.model.Item;
 import se.kth.iv1350.salepos.model.ItemID;
+import se.kth.iv1350.salepos.model.SaleInfoForDiscountDTO;
 
 /**
  * Contains all calls to the external discount registry that provides discount information and calculates
@@ -21,21 +22,20 @@ public class DiscountRegistry {
      * Finds and calculates eligible discounts for the customer with the specified customer ID.
      * 
      * @param customerID The ID of the customer that wants a discount.
-     * @param items The list of items that are registeres in the current sale.
-     * @param totalPrice The total price of the sale (without any discounts).
+     * @param saleInfo A DTO that contains all the sale info that is needed for discounts.
      * @return The total price if the sale with added discounts.
      * @throws NoEligibleDiscountException If the customer is not eligible for any discounts.
      */
-    public Amount calculateEligibleDiscount(CustomerID customerID, List<Item> items, Amount totalPrice) throws 
+    public Amount calculateEligibleDiscount(CustomerID customerID, SaleInfoForDiscountDTO saleInfo) throws 
             NoEligibleDiscountException {
-        Amount totalPriceAfterDiscount = new Amount(totalPrice);
+        Amount totalPriceAfterDiscount = new Amount(saleInfo.getTotalPriceWithVat());
         DiscountFactory discountFactory = DiscountFactory.getFactory();   
         
-        if (checkForBaguetteDiscount(customerID, items)) {
+        if (checkForBaguetteDiscount(customerID, saleInfo.getItems())) {
             Discounter discounter = discountFactory.getDiscount("Baguette Discount");
             totalPriceAfterDiscount = discounter.calculateDiscount(totalPriceAfterDiscount);
         }
-        if (checkForSoapDiscount(items)) {
+        if (checkForSoapDiscount(saleInfo.getItems())) {
             Discounter discounter = discountFactory.getDiscount("Soap Discount");
             totalPriceAfterDiscount = discounter.calculateDiscount(totalPriceAfterDiscount);
         }
