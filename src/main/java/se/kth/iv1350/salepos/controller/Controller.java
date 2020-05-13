@@ -105,7 +105,6 @@ public class Controller {
      */
     public CurrentSaleDTO requestDiscount(CustomerID customerID) throws NoEligibleDiscountException {
         SaleInfoForDiscountDTO saleInfoForDiscount = sale.getSaleInfoForDiscounts();
-        Amount totalPrice = sale.getSaleInfo().getTotalPriceWithVat();
         List<Discounter> discounts = discountRegistry.getEligibleDiscount(customerID, saleInfoForDiscount);
         CurrentSaleDTO saleInfo = sale.addDiscount(discounts);
         
