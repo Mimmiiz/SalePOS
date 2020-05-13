@@ -66,7 +66,7 @@ public class View {
         
             Amount paidAmount = new Amount(50);
             Amount change = contr.pay(paidAmount);
-            System.out.println("The payment has been started. Paid amount: 40");
+            System.out.println("The payment has been started. Paid amount: 50");
             System.out.println ("The amount of change: " + change.getAmount());
         } catch (Exception exc) {
             LogHandler logHandler = LogHandler.getLogHandler();
