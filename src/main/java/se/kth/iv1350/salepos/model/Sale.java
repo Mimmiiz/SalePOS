@@ -7,6 +7,7 @@ import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
 import se.kth.iv1350.salepos.integration.ItemDTO;
 import se.kth.iv1350.salepos.integration.ItemRegistry;
 import se.kth.iv1350.salepos.integration.Printer;
+import se.kth.iv1350.salepos.integration.discount.Discounter;
 
 /**
  * One single sale made by one customer and paid with one payment.
@@ -19,6 +20,7 @@ public class Sale {
     private Amount saleVatRate = new Amount();
     private Amount totalPriceWithDiscount = new Amount();
     private List<PaymentObserver> paymentObservers = new ArrayList<>();
+    private List<Discounter> discounts = new ArrayList<>();
     
     /**
      * Creates a new instance and sets the current local time of the sale.
@@ -110,8 +112,7 @@ public class Sale {
      * @return The sale info that is needed for discounts.
      */
     public SaleInfoForDiscountDTO getSaleInfoForDiscounts() {
-        SaleInfoForDiscountDTO saleInfoForDiscount = new SaleInfoForDiscountDTO(itemList.getList(), 
-                totalPriceWithVat);
+        SaleInfoForDiscountDTO saleInfoForDiscount = new SaleInfoForDiscountDTO(itemList.getList());
        return saleInfoForDiscount;
     }
     
@@ -143,6 +144,20 @@ public class Sale {
     public void printReceipt(Printer printer) {
         Receipt receipt = new Receipt(saleTime, itemList.getList(), totalPriceWithVat, totalPriceWithDiscount, saleVatRate);
         printer.print(receipt);
+    }
+    
+    public CurrentSaleDTO addDiscount(List<Discounter> discounts) throws NoEligibleDiscountException {
+        this.discounts.addAll(discounts);
+        calculateDiscounts();
+        CurrentSaleDTO saleInfo = new CurrentSaleDTO(totalPriceWithVat, totalPriceWithDiscount);
+        return saleInfo;
+    }
+    
+    private void calculateDiscounts() throws NoEligibleDiscountException {
+        if (discounts.isEmpty())
+            throw new NoEligibleDiscountException();
+        for (Discounter discount : discounts)
+            totalPriceWithDiscount = discount.calculateDiscount(totalPriceWithVat);
     }
     
     /**
