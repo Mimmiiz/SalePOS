@@ -18,7 +18,7 @@ public class Sale {
     private Amount totalPriceWithVat = new Amount();
     private Amount saleVatRate = new Amount();
     private Amount totalPriceWithDiscount = new Amount();
-    private List<SaleObserver> saleObservers = new ArrayList<>();
+    private List<PaymentObserver> paymentObservers = new ArrayList<>();
     
     /**
      * Creates a new instance and sets the current local time of the sale.
@@ -93,12 +93,12 @@ public class Sale {
      * 
      * @param saleObservers The observers to notify.
      */
-    public void addSaleObservers(List<SaleObserver> saleObservers) {
-        this.saleObservers.addAll(saleObservers);
+    public void addPaymentObservers(List<PaymentObserver> paymentObservers) {
+        this.paymentObservers.addAll(paymentObservers);
     }
     
     private void notifyObservers(Amount totalPrice) {
-        for (SaleObserver observer : saleObservers) {
+        for (PaymentObserver observer : paymentObservers) {
             observer.updateTotalRevenue(totalPrice);
         }
     }
