@@ -93,7 +93,7 @@ public class Sale {
     /**
      * The specified observers will be notified when a sale is paid.
      * 
-     * @param saleObservers The observers to notify.
+     * @param paymentObservers The observers to notify.
      */
     public void addPaymentObservers(List<PaymentObserver> paymentObservers) {
         this.paymentObservers.addAll(paymentObservers);
@@ -104,7 +104,6 @@ public class Sale {
             observer.updateTotalRevenue(totalPrice);
         }
     }
-    
    
     /**
      * Creates a DTO for sale information specifically for discounts.
@@ -114,15 +113,6 @@ public class Sale {
     public SaleInfoForDiscountDTO getSaleInfoForDiscounts() {
         SaleInfoForDiscountDTO saleInfoForDiscount = new SaleInfoForDiscountDTO(itemList.getList());
        return saleInfoForDiscount;
-    }
-    
-    /**
-     * Sets the total price with discount if the price has been discounted.
-     * 
-     * @param totalPriceWithDiscount 
-     */
-    public void setTotalPriceWithDiscount (Amount totalPriceWithDiscount) {
-        this.totalPriceWithDiscount = new Amount(totalPriceWithDiscount);
     }
     
     /**
@@ -146,6 +136,13 @@ public class Sale {
         printer.print(receipt);
     }
     
+    /**
+     * Addes the discount to the sale and calculates the total price with discount.
+     * 
+     * @param discounts the discounts that the customer is eligible to.
+     * @return The current sale info after adding discounts. 
+     * @throws NoEligibleDiscountException  If the customer is not eligible for any discounts.
+     */
     public CurrentSaleDTO addDiscount(List<Discounter> discounts) throws NoEligibleDiscountException {
         this.discounts.addAll(discounts);
         calculateDiscounts();
@@ -154,10 +151,13 @@ public class Sale {
     }
     
     private void calculateDiscounts() throws NoEligibleDiscountException {
+        Amount newPriceWithDiscount = new Amount(totalPriceWithVat);
         if (discounts.isEmpty())
             throw new NoEligibleDiscountException();
-        for (Discounter discount : discounts)
-            totalPriceWithDiscount = discount.calculateDiscount(totalPriceWithVat);
+        for (Discounter discount : discounts) {
+            newPriceWithDiscount = discount.calculateDiscount(newPriceWithDiscount);
+        }
+        this.totalPriceWithDiscount = newPriceWithDiscount;
     }
     
     /**
