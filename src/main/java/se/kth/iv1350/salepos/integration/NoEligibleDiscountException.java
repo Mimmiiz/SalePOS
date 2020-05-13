@@ -15,7 +15,7 @@ public class NoEligibleDiscountException extends Exception {
      * @param customerID The ID of the customer.
      */
     public NoEligibleDiscountException(CustomerID customerID) {
-        super("Customer with " + customerID + " is not eligible for any discounts.");
+        super("Customer with the customer ID " + customerID + " is not eligible for any discounts.");
         this.customerID = customerID;
     }
 }
