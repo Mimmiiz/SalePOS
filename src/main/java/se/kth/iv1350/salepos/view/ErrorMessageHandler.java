@@ -7,7 +7,7 @@ import java.time.format.FormatStyle;
 /**
  * This class handles error messages to the user.
  */
-public class ErrorMessageHandler {
+class ErrorMessageHandler {
     private static final ErrorMessageHandler HANDLER_INSTANCE = new ErrorMessageHandler();
     
     private ErrorMessageHandler() {
@@ -16,7 +16,7 @@ public class ErrorMessageHandler {
     /**
      * @return The only instance of the <code>ErrorMessageHandler</code>.
      */
-    public static ErrorMessageHandler getHandler() {
+    static ErrorMessageHandler getHandler() {
         return HANDLER_INSTANCE;
     }
     
