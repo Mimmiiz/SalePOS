@@ -1,13 +1,13 @@
 package se.kth.iv1350.salepos.view;
 
 import se.kth.iv1350.salepos.model.Amount;
-import se.kth.iv1350.salepos.model.SaleObserver;
+import se.kth.iv1350.salepos.model.PaymentObserver;
 
 /**
  * Prints the total revenue to the display.
  */
-public class TotalRevenueView implements SaleObserver{
-    Amount totalRevenue = new Amount();
+class TotalRevenueView implements PaymentObserver{
+    private Amount totalRevenue = new Amount();
     
     /**
      * Updates the total revenue.
