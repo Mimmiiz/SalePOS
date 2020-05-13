@@ -8,7 +8,6 @@ import java.util.List;
  */
 public class SaleInfoForDiscountDTO {
     public final List<Item> items;
-    public final Amount totalPriceWithVat;
     
     /**
      * Creates a new instance.
@@ -16,9 +15,8 @@ public class SaleInfoForDiscountDTO {
      * @param items The list of items that are registered in the sale.
      * @param totalPriceWithVat The total price of the sale. 
      */
-    SaleInfoForDiscountDTO(List<Item> items, Amount totalPriceWithVat) {
+    SaleInfoForDiscountDTO(List<Item> items) {
         this.items = items;
-        this.totalPriceWithVat = totalPriceWithVat;
     }
 
     /**
@@ -27,11 +25,4 @@ public class SaleInfoForDiscountDTO {
     public List<Item> getItems() {
         return items;
     }
-    
-    /**
-     * @return The total price with vat.
-     */
-   public Amount getTotalPriceWithVat() {
-       return new Amount(totalPriceWithVat);
-   }
 }
