@@ -43,6 +43,7 @@ public class View {
             addNewItemID(89991);  
             addNewItemID(89990);
             addNewItemID(10001);
+            addNewItemID(70707);
                 
             System.out.println("Adds an item identifier that gives database exception.");
             addNewItemID(88888);
@@ -63,7 +64,7 @@ public class View {
             if (saleInfo.getTotalPriceWithDiscount().getAmount() != 0)
                 System.out.println("Total price with discounts: " + saleInfo.getTotalPriceWithDiscount().getAmount());
         
-            Amount paidAmount = new Amount(40);
+            Amount paidAmount = new Amount(50);
             Amount change = contr.pay(paidAmount);
             System.out.println("The payment has been started. Paid amount: 40");
             System.out.println ("The amount of change: " + change.getAmount());
