@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import se.kth.iv1350.salepos.integration.discount.DiscountFactory;
 import se.kth.iv1350.salepos.integration.discount.Discounter;
-import se.kth.iv1350.salepos.model.Amount;
 import se.kth.iv1350.salepos.model.CustomerID;
 import se.kth.iv1350.salepos.model.Item;
 import se.kth.iv1350.salepos.model.ItemID;
 import se.kth.iv1350.salepos.model.SaleInfoForDiscountDTO;
 
 /**
- * Contains all calls to the external discount registry that provides discount information and calculates
- * that discount. 
+ * Contains all calls to the external discount registry that provides discount information.
+ * The discounts a customer is eligible for is based on bought item, numer of items bought,
+ * total cost of the entier sale, and customer ID. A customer might be eligible for more than one discount.
+ * Both available discounts and how to combine them vary over time.
  */
 public class DiscountRegistry {
     
@@ -25,7 +26,6 @@ public class DiscountRegistry {
      * @param customerID The ID of the customer that wants a discount.
      * @param saleInfo A DTO that contains all the sale info that is needed for discounts.
      * @return The total price if the sale with added discounts.
-     * @throws NoEligibleDiscountException If the customer is not eligible for any discounts.
      */
     public List<Discounter> getEligibleDiscount(CustomerID customerID, SaleInfoForDiscountDTO saleInfo) {
         DiscountFactory discountFactory = DiscountFactory.getFactory();
