@@ -15,6 +15,10 @@ public class CustomerID {
         this.customerIDNumber = customerIDNumber;
     }
     
+    public String toString() {
+        return "" + customerIDNumber;
+    }
+    
     /**
      * @return The customer ID number.
      */
