@@ -11,9 +11,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 
 public class ErrorMessageHandlerTest {
-    ByteArrayOutputStream outContent;
-    PrintStream originalSysOut;
-    ErrorMessageHandler instanceToTest = ErrorMessageHandler.getHandler();
+    private ByteArrayOutputStream outContent;
+    private PrintStream originalSysOut;
+    private ErrorMessageHandler instanceToTest = ErrorMessageHandler.getHandler();
     
     @BeforeEach
     public void setUp() {
