@@ -6,10 +6,10 @@ import se.kth.iv1350.salepos.integration.ItemDTO;
  * This class represents an item that is being bought by a customer in the current sale.
  */
 public class Item {
-    private ItemID itemID;
-    private String name;
-    private Amount price;
-    private Amount vatRate;
+    private final ItemID itemID;
+    private final String name;
+    private final Amount price;
+    private final Amount vatRate;
     private Amount quantity;
 
     /**
