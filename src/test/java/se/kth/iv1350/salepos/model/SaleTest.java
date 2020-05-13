@@ -3,23 +3,21 @@ package se.kth.iv1350.salepos.model;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import se.kth.iv1350.salepos.integration.ItemRegistry;
-import se.kth.iv1350.salepos.integration.ItemRegistryException;
-import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
-import se.kth.iv1350.salepos.integration.Printer;
-import se.kth.iv1350.salepos.integration.RegistryCreator;
+import se.kth.iv1350.salepos.integration.*;
+import se.kth.iv1350.salepos.integration.discount.Discounter;
 
 public class SaleTest {
-    ByteArrayOutputStream outContent;
-    PrintStream originalSysOut;
+    private ByteArrayOutputStream outContent;
+    private PrintStream originalSysOut;
     private Sale instanceToTest;
     private RegistryCreator regCreator;
     private ItemRegistry itemReg;
-    private ItemList itemList;
+    private DiscountRegistry discountReg;
     
     @BeforeEach
     public void setUp() {
@@ -30,7 +28,7 @@ public class SaleTest {
         instanceToTest = new Sale();
         regCreator = new RegistryCreator();
         itemReg = regCreator.getItemRegistry();
-        itemList = new ItemList();
+        discountReg = regCreator.getDiscountRegistry();
     }
     
     @AfterEach
@@ -40,7 +38,6 @@ public class SaleTest {
         instanceToTest = null;
         regCreator = null;
         itemReg = null;
-        itemList = null;
     }
 
     @Test
@@ -114,6 +111,64 @@ public class SaleTest {
                 + "created correctly.");
     }
     
+    @Test 
+    public void testAddDiscount() { 
+        CustomerID customerID = new CustomerID(980325);
+        SaleInfoForDiscountDTO saleInfo = instanceToTest.getSaleInfoForDiscounts();
+        List<Discounter> discounts = discountReg.getEligibleDiscount(customerID, saleInfo);
+        try {
+            CurrentSaleDTO currentSaleInfo = instanceToTest.addDiscount(discounts);
+            assertTrue(currentSaleInfo instanceof CurrentSaleDTO);
+        } catch (NoEligibleDiscountException e) {
+            fail("Got exception");
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testAddDiscountThatGivesException() {
+        CustomerID customerID = new CustomerID(700101);
+        SaleInfoForDiscountDTO saleInfo = instanceToTest.getSaleInfoForDiscounts();
+        List<Discounter> discounts = discountReg.getEligibleDiscount(customerID, saleInfo);
+        try {
+            instanceToTest.addDiscount(discounts);
+            fail("Added discounts.");
+        } catch (NoEligibleDiscountException e) {
+            assertTrue(e.getMessage().contains("not eligible for any discounts"));
+        }
+    }
+    
+    @Test
+    public void testAddDiscountCorrectCalculationBaguetteAndSoap() {
+        ItemID baguette = new ItemID(10001);
+        ItemID soap = new ItemID(70707);
+        ItemID apple = new ItemID(89991);
+        CustomerID customerID = new CustomerID(730620);
+        try {
+            instanceToTest.registerItem(baguette, itemReg);
+            instanceToTest.registerItem(baguette, itemReg);
+            instanceToTest.registerItem(soap, itemReg);
+            instanceToTest.registerItem(soap, itemReg);
+            instanceToTest.registerItem(apple, itemReg);
+        } catch (NoSuchItemIdentifierException e) {
+            System.out.println("Could not start test.");
+            e.printStackTrace();
+        }
+        SaleInfoForDiscountDTO saleInfoDiscount = instanceToTest.getSaleInfoForDiscounts();
+        List<Discounter> discounts = discountReg.getEligibleDiscount(customerID, saleInfoDiscount);
+        try {
+            instanceToTest.addDiscount(discounts);
+            double expectedResult = 66.55;
+            CurrentSaleDTO saleInfo = instanceToTest.getSaleInfo();
+            Amount result = saleInfo.getTotalPriceWithDiscount();
+            double marginOfError = 0.01;
+            assertEquals(expectedResult, result.getAmount(), marginOfError, "Did not get the correct value.");
+        } catch (NoEligibleDiscountException e) {
+            fail("Got exception.");
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void testPrintReceipt() {
         int itemIdentifier = 89991;
