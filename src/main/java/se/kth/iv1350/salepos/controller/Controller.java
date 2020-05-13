@@ -116,7 +116,7 @@ public class Controller {
      * The specified observer will be notified when the sale has been paid.
      * There will only be notifications for sales after this method has been called.
      * 
-     * @param saleObserver The observer to notify.
+     * @param paymentObserver The observer to notify.
      */
     public void addPaymentObserver(PaymentObserver paymentObserver) {
         paymentObservers.add(paymentObserver);
