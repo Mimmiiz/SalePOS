@@ -6,7 +6,7 @@ import java.util.List;
  * A DTO that contains all the sale information that is needed for discounts.
  * The DTO can only be created in the model layer.
  */
-class SaleInfoForDiscountDTO {
+public class SaleInfoForDiscountDTO {
     public final List<Item> items;
     public final Amount totalPriceWithVat;
     
