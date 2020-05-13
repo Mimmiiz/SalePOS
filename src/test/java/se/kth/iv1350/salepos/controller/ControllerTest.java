@@ -10,7 +10,9 @@ import se.kth.iv1350.salepos.integration.Printer;
 import se.kth.iv1350.salepos.integration.RegistryCreator;
 import se.kth.iv1350.salepos.model.Amount;
 import se.kth.iv1350.salepos.model.CurrentSaleDTO;
+import se.kth.iv1350.salepos.model.CustomerID;
 import se.kth.iv1350.salepos.model.ItemID;
+import se.kth.iv1350.salepos.model.NoEligibleDiscountException;
 import se.kth.iv1350.salepos.model.Sale;
 
 public class ControllerTest {
@@ -155,6 +157,30 @@ public class ControllerTest {
         } catch (NoSuchItemIdentifierException | OperationFailedException e) {
             fail("Got exception.");
             e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testRequestDiscountReturnCorrectObject() {
+        CustomerID customerID = new CustomerID(980325);
+        try {
+            CurrentSaleDTO saleInfo = instanceToTest.requestDiscount(customerID);
+            assertTrue(saleInfo instanceof CurrentSaleDTO);
+
+        } catch (NoEligibleDiscountException e) {
+            fail("Got Exception.");
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    public void testRequestDiscountNoEligibleDiscounts() {
+        CustomerID customerID = new CustomerID(800323);
+        try {
+            instanceToTest.requestDiscount(customerID);
+            fail("Discount was added.");
+        } catch (NoEligibleDiscountException e) {
+            assertTrue(e.getMessage().contains("not eligible for any discounts"));
         }
     }
 }
