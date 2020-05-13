@@ -103,8 +103,16 @@ public class Sale {
         }
     }
     
-    public List<Item> getSaleInfoForDiscounts() {
-       return itemList.getList();
+   
+    /**
+     * Creates a DTO for sale information specifically for discounts.
+     * 
+     * @return The sale info that is needed for discounts.
+     */
+    public SaleInfoForDiscountDTO getSaleInfoForDiscounts() {
+        SaleInfoForDiscountDTO saleInfoForDiscount = new SaleInfoForDiscountDTO(itemList.getList(), 
+                totalPriceWithVat);
+       return saleInfoForDiscount;
     }
     
     /**
