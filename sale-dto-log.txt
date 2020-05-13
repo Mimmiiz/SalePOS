@@ -1,0 +1,8 @@
+13 maj 2020 19:47:05, Exception was thrown: Could not connect to the database.
+se.kth.iv1350.salepos.integration.ItemRegistryException: Could not connect to the database.
+	at se.kth.iv1350.salepos.integration.ItemRegistry.searchForItem(ItemRegistry.java:32)
+	at se.kth.iv1350.salepos.model.Sale.registerItem(Sale.java:49)
+	at se.kth.iv1350.salepos.controller.Controller.registerItem(Controller.java:61)
+	at se.kth.iv1350.salepos.view.View.addNewItemID(View.java:88)
+	at se.kth.iv1350.salepos.view.View.runFakeExecution(View.java:49)
+	at se.kth.iv1350.salepos.startup.Main.main(Main.java:28)
