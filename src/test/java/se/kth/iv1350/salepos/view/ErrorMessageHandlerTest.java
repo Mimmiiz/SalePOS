@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 public class ErrorMessageHandlerTest {
     ByteArrayOutputStream outContent;
     PrintStream originalSysOut;
-    ErrorMessageHandler instanceToTest = new ErrorMessageHandler();
+    ErrorMessageHandler instanceToTest = ErrorMessageHandler.getHandler();
     
     @BeforeEach
     public void setUp() {
