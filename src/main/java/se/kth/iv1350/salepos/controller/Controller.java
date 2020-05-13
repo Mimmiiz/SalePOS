@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import se.kth.iv1350.salepos.integration.*;
 import se.kth.iv1350.salepos.model.*;
+import se.kth.iv1350.salepos.util.LogHandler;
 
 /**
  * This is the application's only controller class. All calls to the model pass through here.
@@ -17,7 +18,7 @@ public class Controller {
     private Printer printer;
     private CashRegister cashRegister;
     private Sale sale;
-    private List<SaleObserver> saleObservers = new ArrayList<>();
+    private List<PaymentObserver> paymentObservers = new ArrayList<>();
     
     /**
      * Creates a new instance. 
@@ -40,7 +41,7 @@ public class Controller {
      */
     public void startSale() {
         sale = new Sale();
-        sale.addSaleObservers(saleObservers);
+        sale.addPaymentObservers(paymentObservers);
     }
     
     /**
@@ -58,6 +59,8 @@ public class Controller {
             CurrentSaleDTO saleInfo = sale.registerItem(itemID, itemRegistry);
             return  saleInfo; 
         } catch (ItemRegistryException itemRegExc) {
+            LogHandler logger = LogHandler.getLogHandler();
+            logger.logException(itemRegExc);
             throw new OperationFailedException("The item could not be registered.", itemRegExc);
         }
     }
@@ -114,8 +117,8 @@ public class Controller {
      * 
      * @param saleObserver The observer to notify.
      */
-    public void addSaleObserver(SaleObserver saleObserver) {
-        saleObservers.add(saleObserver);
+    public void addPaymentObserver(PaymentObserver paymentObserver) {
+        paymentObservers.add(paymentObserver);
     }
 
     /**
