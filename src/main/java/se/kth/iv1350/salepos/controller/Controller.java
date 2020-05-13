@@ -91,10 +91,17 @@ public class Controller {
         return change;
     }
     
-    public CurrentSaleDTO requestDiscount(CustomerID customerID) {
-        List<Item> items = sale.getSaleInfoForDiscounts();
+    /**
+     * Handles discount reguest. If the customer is eligible for a discount the discounted price is added to the sale.
+     * 
+     * @param customerID The ID of the customer that wants a discount.
+     * @return The sale information with the added discount price.
+     * @throws NoEligibleDiscountException If the customer is not eligible for any discounts.
+     */
+    public CurrentSaleDTO requestDiscount(CustomerID customerID) throws NoEligibleDiscountException {
+        SaleInfoForDiscountDTO saleInfoForDiscount = sale.getSaleInfoForDiscounts();
         Amount totalPrice = sale.getSaleInfo().getTotalPriceWithVat();
-        Amount totalPriceAfterDiscount = discountRegistry.calculateEligibleDiscount(customerID, items, totalPrice);
+        Amount totalPriceAfterDiscount = discountRegistry.calculateEligibleDiscount(customerID, saleInfoForDiscount);
         if (totalPriceAfterDiscount.getAmount() != totalPrice.getAmount()) {
             sale.setTotalPriceWithDiscount(totalPriceAfterDiscount);
         }
@@ -118,9 +125,5 @@ public class Controller {
      */
     Sale getSale() {
         return sale;
-    }
-
-    private Exception OperationFailedException(String could_not_add_discounts_customer_might_no) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
