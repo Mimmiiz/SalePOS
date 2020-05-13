@@ -13,6 +13,9 @@ public class ErrorMessageHandler {
     private ErrorMessageHandler() {
     }
     
+    /**
+     * @return The only instance of the <code>ErrorMessageHandler</code>.
+     */
     public static ErrorMessageHandler getHandler() {
         return HANDLER_INSTANCE;
     }
