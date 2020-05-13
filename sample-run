@@ -1,0 +1,100 @@
+cd D:\Maria\Documents\NetBeansProjects\SalePOS; "JAVA_HOME=C:\\Program Files\\Java\\jdk-13.0.1" cmd /c "\"C:\\Program Files\\NetBeans-11.3\\netbeans\\java\\maven\\bin\\mvn.cmd\" -Dexec.args=\"-classpath %classpath se.kth.iv1350.salepos.startup.Main\" -Dexec.executable=\"C:\\Program Files\\Java\\jdk-13.0.1\\bin\\java.exe\" -Dmaven.ext.class.path=\"C:\\Program Files\\NetBeans-11.3\\netbeans\\java\\maven-nblib\\netbeans-eventspy.jar\" -Dfile.encoding=UTF-8 org.codehaus.mojo:exec-maven-plugin:1.5.0:exec"
+Running NetBeans Compile On Save execution. Phase execution is skipped and output directories of dependency projects (with Compile on Save turned on) will be used instead of their jar artifacts.
+Scanning for projects...
+                                                                        
+------------------------------------------------------------------------
+Building SalePOS 1.0-SNAPSHOT
+------------------------------------------------------------------------
+
+--- exec-maven-plugin:1.5.0:exec (default-cli) @ SalePOS ---
+A new sale has been started.
+A new item identifier has been entered. Item ID: 89991
+Output: 
+Item name: Apple
+Item price: 5.0
+Item VAT rate: 6.0
+Item quantity: 1.0
+Running total including VAT: 5.300000000000001
+A new item identifier has been entered. Item ID: 89991
+Output: 
+Item name: Apple
+Item price: 5.0
+Item VAT rate: 6.0
+Item quantity: 2.0
+Running total including VAT: 10.600000000000001
+A new item identifier has been entered. Item ID: 89990
+Output: 
+Item name: Banana
+Item price: 3.0
+Item VAT rate: 12.0
+Item quantity: 1.0
+Running total including VAT: 13.96
+A new item identifier has been entered. Item ID: 10001
+Output: 
+Item name: Baguette
+Item price: 15.0
+Item VAT rate: 25.0
+Item quantity: 1.0
+Running total including VAT: 32.71
+A new item identifier has been entered. Item ID: 70707
+Output: 
+Item name: Hand Soap
+Item price: 25.0
+Item VAT rate: 25.0
+Item quantity: 1.0
+Running total including VAT: 63.96
+Adds an item identifier that gives database exception.
+A new item identifier has been entered. Item ID: 88888
+-------------------- NOTIFICATION --------------------
+13 maj 2020 20:19:15, ERROR: 
+The item could not be registered to the sale. Check connection or try again.
+-------------------------------------------------------
+
+Adds an item identifier that does not exist.
+A new item identifier has been entered. Item ID: 55555
+-------------------- NOTIFICATION --------------------
+13 maj 2020 20:19:15, ERROR: 
+The entered item identifier 55555 does not exist, please try again.
+-------------------------------------------------------
+
+Cashier requests discount when customer is not eligible for discounts.
+-------------------- NOTIFICATION --------------------
+13 maj 2020 20:19:15, ERROR: 
+Customer is not eligible for any discounts.
+-------------------------------------------------------
+
+Cashier requests discount when customer is eligible for discounts.
+Total price including VAT: 63.96
+Total price with the added discount: 47.97
+The sale has ended.
+Output: 
+Total price including VAT: 63.96
+Total price with discounts: 47.97
+---------------- DISPLAY ----------------
+Total revenue: 47.97
+-----------------------------------------
+
+---------------- RECEIPT ----------------
+Super Store
+Super Street 10, Super Town, 19021
+13 maj 2020 20:19:15
+   ITEM:	UNIT PRICE:	TOTAL:
+2  Apple	5.0		10.0
+1  Banana	3.0		3.0
+1  Baguette	15.0		15.0
+1  Hand Soap	25.0		25.0
+------------------------------------------
+Total:				63.96
+Total with discount:		47.97
+Tax:				20.679245283018876%
+------------------------------------------
+
+The payment has been started. Paid amount: 50
+The amount of change: 2.030000000000001
+------------------------------------------------------------------------
+BUILD SUCCESS
+------------------------------------------------------------------------
+Total time: 0.734 s
+Finished at: 2020-05-13T20:19:15+02:00
+Final Memory: 7M/30M
+------------------------------------------------------------------------
