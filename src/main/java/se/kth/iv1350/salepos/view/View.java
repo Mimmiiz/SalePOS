@@ -17,8 +17,6 @@ import se.kth.iv1350.salepos.util.LogHandler;
  */
 public class View {
     private Controller contr;
-    private ErrorMessageHandler errorMessageHandler = new ErrorMessageHandler();
-    private LogHandler logHandler;
     
     /**
      * Creates a new instance.
@@ -29,11 +27,6 @@ public class View {
     public View (Controller contr) throws IOException{
         this.contr = contr;
         contr.addSaleObserver(new TotalRevenueView());
-        try {
-        this.logHandler = new LogHandler();
-        } catch (IOException exc) {
-            System.out.println("Log handler could not be created.");
-        }
     }
     
     /**
@@ -109,6 +102,8 @@ public class View {
     }
     
     private void handleException(String message, Exception exc) {
+        LogHandler logHandler = LogHandler.getLogHandler();
+        ErrorMessageHandler errorMessageHandler = ErrorMessageHandler.getHandler();
         errorMessageHandler.showErrorMessage(message);
         logHandler.logException(exc);
     }
