@@ -3,7 +3,7 @@ package se.kth.iv1350.salepos.integration.discount;
 import se.kth.iv1350.salepos.model.Amount;
 
 /**
- * This class represents a discount for the whole sale. If the customer has the correct ID they are
+ * This class represents a 25% discount for the whole sale. If the customer has the correct ID they are
  * eligible for this discount.
  */
 class WholeSaleDiscount implements Discounter {
