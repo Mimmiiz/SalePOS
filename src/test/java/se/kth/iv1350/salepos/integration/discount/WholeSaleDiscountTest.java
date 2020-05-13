@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import se.kth.iv1350.salepos.model.Amount;
 
 public class WholeSaleDiscountTest {
-    WholeSaleDiscount instanceToTest = new WholeSaleDiscount();
+    private WholeSaleDiscount instanceToTest = new WholeSaleDiscount();
 
     @Test
     public void testCalculateDiscount() {
