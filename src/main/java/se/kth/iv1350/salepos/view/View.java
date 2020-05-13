@@ -3,6 +3,7 @@ package se.kth.iv1350.salepos.view;
 import java.io.IOException;
 import se.kth.iv1350.salepos.controller.Controller;
 import se.kth.iv1350.salepos.controller.OperationFailedException;
+import se.kth.iv1350.salepos.integration.NoEligibleDiscountException;
 import se.kth.iv1350.salepos.integration.NoSuchItemIdentifierException;
 import se.kth.iv1350.salepos.model.Amount;
 import se.kth.iv1350.salepos.model.CurrentSaleDTO;
@@ -54,9 +55,13 @@ public class View {
         addNewItemID(55555);
         
         System.out.println("Cashier requests discount.");
-        saleInfo = contr.requestDiscount(new CustomerID(980325));
-        System.out.println("Total price including VAT: " + saleInfo.getTotalPriceWithVat().getAmount());
-        System.out.println("Total price with the added discount: " + saleInfo.getTotalPriceWithDiscount().getAmount());
+        try {
+            saleInfo = contr.requestDiscount(new CustomerID(14502));
+            System.out.println("Total price including VAT: " + saleInfo.getTotalPriceWithVat().getAmount());
+            System.out.println("Total price with the added discount: " + saleInfo.getTotalPriceWithDiscount().getAmount());
+        } catch(NoEligibleDiscountException exc) {
+            handleException(exc.getMessage(), exc);
+        }
         
         System.out.println("The sale has ended.");
         saleInfo = contr.endSale();
