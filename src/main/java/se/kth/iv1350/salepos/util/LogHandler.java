@@ -12,6 +12,7 @@ import java.time.format.FormatStyle;
  */
 public class LogHandler {
     private static final String LOG_FILE_NAME = "sale-dto-log.txt";
+    private static final LogHandler LOG_HANDLER_INSTANCE = new LogHandler();
     private PrintWriter printWriter;
     
     /**
@@ -19,12 +20,17 @@ public class LogHandler {
      * 
      * @throws IOException 
      */
-    public LogHandler() throws IOException {
+    private LogHandler() {
         try {
             printWriter = new PrintWriter (new FileWriter(LOG_FILE_NAME), true);
         } catch (IOException exc) {
             System.out.println("Could not create LogHandler.");
+            exc.printStackTrace();
         }
+    }
+    
+    public static LogHandler getLogHandler() {
+        return LOG_HANDLER_INSTANCE;
     }
     
     /**
