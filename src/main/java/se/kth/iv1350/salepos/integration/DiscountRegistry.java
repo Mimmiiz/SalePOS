@@ -17,7 +17,17 @@ public class DiscountRegistry {
     public DiscountRegistry() {
     }
 
-    public Amount calculateEligibleDiscount(CustomerID customerID, List<Item> items, Amount totalPrice) {
+    /**
+     * Finds and calculates eligible discounts for the customer with the specified customer ID.
+     * 
+     * @param customerID The ID of the customer that wants a discount.
+     * @param items The list of items that are registeres in the current sale.
+     * @param totalPrice The total price of the sale (without any discounts).
+     * @return The total price if the sale with added discounts.
+     * @throws NoEligibleDiscountException If the customer is not eligible for any discounts.
+     */
+    public Amount calculateEligibleDiscount(CustomerID customerID, List<Item> items, Amount totalPrice) throws 
+            NoEligibleDiscountException {
         Amount totalPriceAfterDiscount = new Amount(totalPrice);
         DiscountFactory discountFactory = DiscountFactory.getFactory();   
         
@@ -33,6 +43,9 @@ public class DiscountRegistry {
             Discounter discounter = discountFactory.getDiscount("Whole Sale Discount");
             totalPriceAfterDiscount = discounter.calculateDiscount(totalPriceAfterDiscount);
         }
+        else
+            throw new NoEligibleDiscountException(customerID);
+        
         return totalPriceAfterDiscount;
     }
     
