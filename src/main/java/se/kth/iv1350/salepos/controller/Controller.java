@@ -1,9 +1,11 @@
 package se.kth.iv1350.salepos.controller;
 
+import se.kth.iv1350.salepos.model.NoEligibleDiscountException;
 import se.kth.iv1350.salepos.integration.DiscountRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import se.kth.iv1350.salepos.integration.*;
+import se.kth.iv1350.salepos.integration.discount.Discounter;
 import se.kth.iv1350.salepos.model.*;
 import se.kth.iv1350.salepos.util.LogHandler;
 
@@ -104,11 +106,10 @@ public class Controller {
     public CurrentSaleDTO requestDiscount(CustomerID customerID) throws NoEligibleDiscountException {
         SaleInfoForDiscountDTO saleInfoForDiscount = sale.getSaleInfoForDiscounts();
         Amount totalPrice = sale.getSaleInfo().getTotalPriceWithVat();
-        Amount totalPriceAfterDiscount = discountRegistry.calculateEligibleDiscount(customerID, saleInfoForDiscount);
-        if (totalPriceAfterDiscount.getAmount() != totalPrice.getAmount()) {
-            sale.setTotalPriceWithDiscount(totalPriceAfterDiscount);
-        }
-        return sale.getSaleInfo();
+        List<Discounter> discounts = discountRegistry.getEligibleDiscount(customerID, saleInfoForDiscount);
+        CurrentSaleDTO saleInfo = sale.addDiscount(discounts);
+        
+        return saleInfo;
     }
     
     /**
