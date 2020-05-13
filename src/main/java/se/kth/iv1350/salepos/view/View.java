@@ -26,45 +26,52 @@ public class View {
      */
     public View (Controller contr) throws IOException{
         this.contr = contr;
-        contr.addSaleObserver(new TotalRevenueView());
+        contr.addPaymentObserver(new TotalRevenueView());
     }
     
     /**
      * Performs a fake execution of a sale, by calling all system operations in the controller.
      */
     public void runFakeExecution() {
-        contr.startSale();
-        System.out.println("A new sale has been started.");
-        
-        CurrentSaleDTO saleInfo;
-        
-        addNewItemID(89991);
-        addNewItemID(89991);  
-        addNewItemID(89990);
-        addNewItemID(10001);
-        addNewItemID(88888);
-        
-        System.out.println("Adds an item identifier that does not exist.");
-        addNewItemID(55555);
-        
-        System.out.println("Cashier requests discount.");
         try {
-            saleInfo = contr.requestDiscount(new CustomerID(14502));
+            contr.startSale();
+            System.out.println("A new sale has been started.");
+        
+            CurrentSaleDTO saleInfo;
+        
+            addNewItemID(89991);
+            addNewItemID(89991);  
+            addNewItemID(89990);
+            addNewItemID(10001);
+                
+            System.out.println("Adds an item identifier that gives database exception.");
+            addNewItemID(88888);
+        
+            System.out.println("Adds an item identifier that does not exist.");
+            addNewItemID(55555);
+        
+            System.out.println("Cashier requests discount when customer is not eligible for discounts.");
+            requestDiscount(new CustomerID(750902));
+                
+            System.out.println("Cashier requests discount when customer is eligible for discounts.");
+            requestDiscount(new CustomerID(980325));
+        
+            System.out.println("The sale has ended.");
+            saleInfo = contr.endSale();
+            System.out.println("Output: ");
             System.out.println("Total price including VAT: " + saleInfo.getTotalPriceWithVat().getAmount());
-            System.out.println("Total price with the added discount: " + saleInfo.getTotalPriceWithDiscount().getAmount());
-        } catch(NoEligibleDiscountException exc) {
-            handleException(exc.getMessage(), exc);
+            if (saleInfo.getTotalPriceWithDiscount().getAmount() != 0)
+                System.out.println("Total price with discounts: " + saleInfo.getTotalPriceWithDiscount().getAmount());
+        
+            Amount paidAmount = new Amount(40);
+            Amount change = contr.pay(paidAmount);
+            System.out.println("The payment has been started. Paid amount: 40");
+            System.out.println ("The amount of change: " + change.getAmount());
+        } catch (Exception exc) {
+            LogHandler logHandler = LogHandler.getLogHandler();
+            handleException("Failed to complete sale, try again.", exc);
+            logHandler.logException(exc);
         }
-        
-        System.out.println("The sale has ended.");
-        saleInfo = contr.endSale();
-        System.out.println("Output: ");
-        System.out.println("Total price including VAT: " + saleInfo.getTotalPriceWithVat().getAmount());
-        
-        Amount paidAmount = new Amount(40);
-        Amount change = contr.pay(paidAmount);
-        System.out.println("The payment has been started. Paid amount: 40");
-        System.out.println ("The amount of change: " + change.getAmount());
     }
     
     /**
@@ -86,6 +93,17 @@ public class View {
             handleException("The item could not be registered to the sale. Check connection or try again.", exc);
         }
     }
+    
+    private void requestDiscount(CustomerID customerID) {
+        CurrentSaleDTO saleInfo;
+        try {
+            saleInfo = contr.requestDiscount(customerID);
+            System.out.println("Total price including VAT: " + saleInfo.getTotalPriceWithVat().getAmount());
+            System.out.println("Total price with the added discount: " + saleInfo.getTotalPriceWithDiscount().getAmount());
+        } catch(NoEligibleDiscountException exc) {
+            handleException(exc.getMessage(), exc);
+        }
+    }
    
     /**
      * Prints out the retreived sale information to the screen.
@@ -102,9 +120,7 @@ public class View {
     }
     
     private void handleException(String message, Exception exc) {
-        LogHandler logHandler = LogHandler.getLogHandler();
         ErrorMessageHandler errorMessageHandler = ErrorMessageHandler.getHandler();
         errorMessageHandler.showErrorMessage(message);
-        logHandler.logException(exc);
     }
 }
