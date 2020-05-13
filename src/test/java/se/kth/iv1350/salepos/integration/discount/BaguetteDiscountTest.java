@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import se.kth.iv1350.salepos.model.Amount;
 
 public class BaguetteDiscountTest {
-    BaguetteDiscount instanceToTest = new BaguetteDiscount();
+    private BaguetteDiscount instanceToTest = new BaguetteDiscount();
 
     @Test
     public void testCalculateDiscount() {
